@@ -1,9 +1,11 @@
 'use client'
 
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import UserLogin from '@/components/authform';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Login() {
+  const { status } = useSession();
   return (
     <Grid 
       container
@@ -11,7 +13,11 @@ export default function Login() {
       alignItems='center'
       style={{ height: '100vh', marginTop: '-24px' }}
     >
-      <UserLogin />
+      {status === 'authenticated' ? (
+        <Button onClick={() => signOut()} color='inherit'>Sign Out</Button>
+        ) : (
+          <UserLogin />
+      )}
     </Grid>
   );
 }

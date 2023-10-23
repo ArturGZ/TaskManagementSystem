@@ -2,16 +2,13 @@
 
 import { Avatar, Box, Button, CssBaseline, Grid, Link, Paper, Typography, TextField } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import SignInFbBtn from './login-fb-btn';
+import SignInBtn from './login-fb-btn';
 import Divider from '@mui/material/Divider';
 
 
 export default function UserLogin() {
     return (
-			     
-			<Grid container component='main' justifyContent={'center'}>
-					<CssBaseline />
-				
+			<Grid container component='main' justifyContent={'center'}>				
 				<Grid item xs={12} sm={8} md={4} component={Paper} elevation={10} margin={3}>
 					<Box
 						sx={{
@@ -24,7 +21,10 @@ export default function UserLogin() {
 						}}
 						
 					>
-						<Avatar sx={{ margin: 1, backgroundColor: 'secondary.main', width: 60, height:60}} variant='rounded'>
+						<Avatar variant='rounded'
+							sx={{ margin: 1, backgroundColor: 'secondary.main', width: 60, height:60}} 
+							data-testid='avatar'
+						>
 							<PersonIcon/>
 						</Avatar>
 						<Typography component='h1' variant='h5'>
@@ -41,6 +41,7 @@ export default function UserLogin() {
 								name='email'
 								autoComplete='email'
 								autoFocus
+								inputProps={{ 'data-testid': 'email-user' }}
 							/>
 
 							<TextField
@@ -52,6 +53,7 @@ export default function UserLogin() {
 								type='password'
 								id='password'
 								autoComplete='current-password'
+								inputProps={{ 'data-testid': 'password-user' }}
 							/>
 
 							<Button
@@ -59,25 +61,26 @@ export default function UserLogin() {
 								fullWidth
 								variant='contained'
 								id='btn-signin'
-								sx={{ marginTop: 3, marginBottom: 2 }}
+								sx={{ marginTop: 3}}
+								data-testid='btn-signin'
 							>
 								Sign In
 							</Button>
 
-							<Divider variant='middle' />
+							<Divider variant='middle' sx={{ marginY: 2}} />
 
-							<Grid sx={{ marginY: 2}} >
-								<SignInFbBtn/>
+							<Grid>
+								<SignInBtn/>
 							</Grid>
 							
 							<Grid container>
-								<Grid item xs>
-									<Link href='#' variant='body2' >
+								<Grid item xs sx={{ marginTop: 2}}>
+									<Link href='#' variant='body2' data-testid='forgot-pass'>
 										Forgot password?
 									</Link>
 								</Grid>
-								<Grid item>
-									<Link href='#' variant='body2' >
+								<Grid item sx={{ marginTop: 2}}> 
+									<Link href='#' variant='body2' data-testid='signup'>
 										{"Don't have an account? Sign Up"}
 									</Link>
 								</Grid>
@@ -86,6 +89,5 @@ export default function UserLogin() {
           </Box>
         </Grid>
       </Grid>
-    
     );
 }

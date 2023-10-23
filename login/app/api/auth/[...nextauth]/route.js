@@ -1,5 +1,5 @@
 import NextAuth from 'next-auth/next';
-import FacebookProvider from "next-auth/providers/facebook";
+import FacebookProvider from 'next-auth/providers/facebook';
 
 const authOptions = {
     providers: [
@@ -8,6 +8,7 @@ const authOptions = {
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         }),
     ],
+    secret: 'secretSession',
 };
 
 const handler = NextAuth(authOptions);
