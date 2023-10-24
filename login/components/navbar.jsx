@@ -9,10 +9,12 @@ export default function Navbar() {
 			<Box sx={{ flexGrow: 1 }}>
 				<CssBaseline />
 				<AppBar position='static' sx={{ boxShadow: 'md' }} data-testid='appbar'>
-					<Toolbar data-testid='toolbar'>
-						<Typography variant='h5' component='div' sx={{ flexGrow: 1, marginX: 2 }} data-testid='name-app'>
-							Kairos
-						</Typography>
+					<Toolbar sx= {{ justifyContent: 'space-between' }}data-testid='toolbar'>
+						<Button variant='outlined' size='small' data-testid='btn-navbar-home'>
+							<Typography variant='h5' component='div' sx={{ flexGrow: 1, color: 'white' }} data-testid='name-app'>
+								Kairos
+							</Typography>
+						</Button>
 						{status === 'authenticated' ? (
 							<>
 								<Avatar alt={session?.user.name} src={session?.user.image}
