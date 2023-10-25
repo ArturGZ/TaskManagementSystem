@@ -1,95 +1,70 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import React, {useState} from 'react'
+import TaskList from '../components/task-list'
+import DeleteButton from '../components/delete-button';
+import AddButton from '../components/add-button';
+import { Grid } from '@mui/material';
 
 export default function Home() {
+
+   // Datos de ejemplo 
+   const initialTaskLists = [
+    { id: 1, name: 'Lista de Tareas 1', description: 'Descripción de la Lista 1' , tasks: ['1.1','1.2','1.3']},
+    { id: 2, name: 'Lista de Tareas 2', description: 'Descripción de la Lista 2' , tasks: ['2.1','2.2','2.3']},
+    { id: 3, name: 'Lista de Tareas 3', description: 'Descripción de la Lista 3' , tasks: ['3.1','3.2','3.3']},
+    { id: 4, name: 'Lista de Tareas 4', description: 'Descripción de la Lista 1' , tasks: ['4.1','4.2','4.3']},
+    { id: 5, name: 'Lista de Tareas 5', description: 'Descripción de la Lista 5' , tasks: ['5.1','5.2','5.3']},
+  ];
+
+  // Estados
+  const [taskLists, setTaskLists]= useState(initialTaskLists);
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  // Función para manejar las tareas seleccionadas
+  function handleCheckboxChange(taskListId) {
+    console.log('entro');
+    if (checkedItems.includes(taskListId)) {
+      setCheckedItems(checkedItems.filter((id) => id !== taskListId));
+      console.log(checkedItems);
+    } else {
+      setCheckedItems([...checkedItems, taskListId]);
+      console.log(checkedItems);
+    }
+  }
+
+  // Función para eliminar las listas seleccionadas
+  function handleDeleteButtonClick() {
+    const updatedTaskLists = taskLists.filter((taskList) => !checkedItems.includes(taskList.id));
+    setCheckedItems([]);
+    setTaskLists(updatedTaskLists);
+    console.log(taskLists);
+  }
+
+  // Función para añadir nuevas listas
+  function handleAddButtonClick(){
+
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <div>
+      <h1>Tasks Lists</h1>
+      <Grid container>
+        {taskLists.map((taskList) => (
+          <Grid item xs={12} key={taskList.id}>
+            <TaskList
+              taskList={taskList}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedItems={checkedItems}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+            <DeleteButton 
+              onClick={() => handleDeleteButtonClick()}
+            />
+          </Grid>
+        ))}
+        <AddButton 
+          onClick={() => handleAddButtonClick()} 
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+      </Grid>
+    </div>
+  );
+} 
