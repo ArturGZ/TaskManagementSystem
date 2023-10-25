@@ -1,95 +1,84 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
 
-export default function Home() {
+import * as React from 'react';
+import { useState } from 'react';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Button from '@mui/material/Button'
+import Switch from '@mui/material/Switch'
+import Avatar from '@mui/material/Avatar';
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import Container from '@mui/material/Container'
+import MenuItem from '@mui/material/MenuItem'
+
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+export default function IconCheckboxes() {
+  const [tarea, setTarea] = useState();
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div>
+      <Typography variant="h1" align='center' pt={15} >
+        Crear nueva tarea
+      </Typography>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <Grid container alignItems='center' direction='row' justifyContent='center' pt={5} pb = {2}>
+        <Typography variant="h5" color="secondary" mr={2} >Tarea:</Typography>
+        <TextField
+          id="tarea"
+          label="Tarea"
+          value = {tarea}
+          onChange={(e) => setTarea(e.target.value)}
         />
-      </div>
+        
+        <Typography variant="h5" color="initial"> </Typography>
+      </Grid>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <Grid container alignItems='center' direction='row' justifyContent='center' pb={5} >
+        <Typography variant="h5" color="secondary" mr={2} >Descripción:</Typography>
+        <TextField
+          id="descripcion"
+          label="Descripción"
+          value = {tarea}
+          onChange={(e) => setTarea(e.target.value)}
+        />
+        
+        <Typography variant="h5" color="initial"> </Typography>
+      </Grid>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+   
+      <Grid container spacing={2}>
+        
+        <Grid container justifyContent="center" direction='column' alignItems='center' item xs={12} sm={6}>
+            <Grid container justifyContent='center' direction='row' >
+              <Typography variant="h5" color="initial" mr={2}>Fecha inicio:</Typography>
+              <TextField
+                id="fecha_inicio"
+                type="date"
+                format = "MM/dd/yyyy"
+                defaultValue="12-31-2023"
+              />
+            </Grid>
+            <Grid container item justifyContent='center' direction='row' >
+              <Typography variant="h5" color="initial" mr={5} align='right'>Fecha fin:</Typography>
+              <TextField
+                id="fecha_fin"
+                type="date"
+                format = "MM/dd/yyyy"
+                defaultValue="12-31-2023"
+              />
+            </Grid>
+          
+        </Grid>
+      </Grid>
+    </div>  
+  );
 }
