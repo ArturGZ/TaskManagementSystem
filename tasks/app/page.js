@@ -1,95 +1,108 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
 
-export default function Home() {
+import * as React from 'react';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid'
+import Divider from '@mui/material/Divider';
+//---
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+
+import data from './data.json';
+import { useState } from 'react';
+
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
+
+
+
+export default function MediaCard() {
+  const [tarea, setTarea] = useState();
+  const [descripcion, setDescripcion] = useState();
+  const [fechaInicio, setFechaInicio] = useState();
+  const [fechaFin, setFechaFin] = useState();
+
+  const [open, setOpen] = React.useState(false);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div color = "primary">
+    <Card sx={{ maxWidth: 500 }}>
+      <CardContent >
+        <div >
+        <ListItemButton onClick={handleClick}>
+        <ListItemText >
+        < Typography gutterBottom variant="h5" component="div">
+          Cocinar 
+          </Typography>
+        </ListItemText>
+      </ListItemButton>
+      <Divider />
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <ListItemButton sx={{ pl: 4 }}>
+          <ListItemText>
+          <Typography gutterBottom variant="h6" component="div">
+          Descripcion 
+          </Typography>
+          <Typography size="small" color="text.secondary">
+            Preparar comida para la familia
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div" >
+            Prioridad 
+          </Typography>
+          <Typography size="small" color="text.secondary"  >
+            baja
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div">
+            Fecha 
+          </Typography>
+          <Typography size="small" color="text.secondary" >
+            fecha Incio tarea
+          </Typography>
+          <Typography size="small" color="text.secondary" >
+            fecha finalizacion
+          </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </Collapse>
+        
+        
         </div>
-      </div>
+      </CardContent> 
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      <CardActions>
+      <FormControlLabel control={<Checkbox  />} label="Complete" align = "right" />        
+      </CardActions>
+    </Card>
+    </div>
+  );
 }
+
