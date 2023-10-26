@@ -1,17 +1,8 @@
 'use client'
+import Home from "./home/page";
 
-import { Grid } from '@mui/material';
-import UserLogin from '@/components/authform';
-
-export default function Login() {
+export default function App() {
   return (
-    <Grid 
-      container
-      justifyContent='center'
-      alignItems='center'
-      style={{ height: '100vh', marginTop: '-24px' }}
-    >
-      <UserLogin />
-    </Grid>
+    <Home />
   );
 }
