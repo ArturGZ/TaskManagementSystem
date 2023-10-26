@@ -1,7 +1,7 @@
-import Login from '@/app/page';
-import Navbar from '@/components/navbar';
-import UserLogin from '@/components/authform';
-import SignInBtn from '@/components/login-fb-btn';
+import Login from '@../app/login/page';
+import Navbar from '../components/navbar';
+import UserLogin from '../components/user-login';
+import SignInBtn from '../components/login-fb-btn';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
