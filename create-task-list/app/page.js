@@ -1,95 +1,106 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
 
-export default function Home() {
+import * as React from 'react';
+import { useState } from 'react';
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Autocomplete from '@mui/material/Autocomplete';
+
+export default function IconCheckboxes() {
+  const [tarea, setTarea] = useState();
+  const [descripcion, setDescripcion] = useState();
+  const [fechaInicio, setFechaInicio] = useState();
+  const [fechaFin, setFechaFin] = useState();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div>
+      <Grid container spacing={5} justifyContent='center' p ={10}>
+      <Card sx={{ minWidth: 700 }}>
+        <CardContent>
+          <Typography variant="h3" component="div" align='center' pt={5} pb ={3}>
+            Crear nueva tarea
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item xs ={6}>
+              <Typography variant="h5" color="initial">
+                Tarea:
+              <TextField size = 'small' fullWidth={true}
+                id="tarea"
+                label=""
+                vale = {tarea}
+                onChange={(e) => setTarea(e.target.value)}
+              />
+              </Typography>
+              <Typography variant="h5" color="initial" pt ={5}>
+                Descripción:
+              <TextField size = 'small' fullWidth={true}
+                id="descripcion"
+                label=""
+                value = {descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+              />
+              </Typography>
+            </Grid>
+            <Grid item xs ={6}>
+              <Typography variant="h5" color="initial" align ='center'>
+                Fecha inicio
+              <TextField size = 'small' fullWidth={true}
+                id="fechaInicio"
+                type='date'
+                label=""
+                value = {fechaInicio}
+                onChange={(e) => setFechaInicio(e.target.value)}
+              />
+              </Typography>
+              <Typography variant="h5" color="initial" pt ={5} align = 'center'>
+                Fecha fin
+              <TextField size = 'small' align = 'center' fullWidth = {true}
+                id="fechaFin"
+                type='date'
+                label=""
+                value = {fechaFin}
+                onChange={(e) => setFechaFin(e.target.value)}
+              />
+              </Typography>
+            </Grid>
+            <Grid item xs = {12}>
+              <Typography variant="h5" pt = {5} >Prioridad</Typography>
+              <Autocomplete
+                disablePortal
+                id="prioridad"
+                options={prioridades}
+                renderInput={(params) => <TextField {...params} size='small'/>}
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardActions>
+          <Button size="large" variant = 'contained'>
+            Guardar
+          </Button>
+          <Button variant="contained" size = 'large'>
+            Cancelar            
+          </Button>
+        </CardActions>
+      </Card>
+      </Grid>
+    </div>
+    
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    
+  );
 }
+
+const prioridades = [
+  {label : ""},
+  {label : 'Baja'},
+  {label : 'Normal'},
+  {label : 'Media'},
+  {label : 'Alta'},
+  
+]
