@@ -1,106 +1,78 @@
 'use client';
 
-import * as React from 'react';
-import { useState } from 'react';
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Autocomplete from '@mui/material/Autocomplete';
+import React, { useState } from 'react';
+import { Button, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Paper, Box } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styles/theme';
 
-export default function IconCheckboxes() {
-  const [tarea, setTarea] = useState();
-  const [descripcion, setDescripcion] = useState();
-  const [fechaInicio, setFechaInicio] = useState();
-  const [fechaFin, setFechaFin] = useState();
+const listaTareas = () => {
+  const [nombreLista, setNombreLista] = useState('');
+  const [descripcionLista, setDescripcionLista] = useState('');
+  const [colorLista, setColorLista] = useState('');
+
+  const handleNombreChange = (event) => {
+    setNombreLista(event.target.value);
+  };
+
+  const handleDescripcionChange = (event) => {
+    setDescripcionLista(event.target.value);
+  };
+
+  const handleColorChange = (event) => {
+    setColorLista(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Aquí se puede realizar la acción de compartir la información
+    console.log('Nombre:', nombreLista);
+    console.log('Descripción:', descripcionLista);
+    console.log('Color:', colorLista);
+  };
 
   return (
-    <div>
-      <Grid container spacing={5} justifyContent='center' p ={10}>
-      <Card sx={{ minWidth: 700 }}>
-        <CardContent>
-          <Typography variant="h3" component="div" align='center' pt={5} pb ={3}>
-            Crear nueva tarea
-          </Typography>
-          <Grid container spacing={1}>
-            <Grid item xs ={6}>
-              <Typography variant="h5" color="initial">
-                Tarea:
-              <TextField size = 'small' fullWidth={true}
-                id="tarea"
-                label=""
-                vale = {tarea}
-                onChange={(e) => setTarea(e.target.value)}
-              />
-              </Typography>
-              <Typography variant="h5" color="initial" pt ={5}>
-                Descripción:
-              <TextField size = 'small' fullWidth={true}
-                id="descripcion"
-                label=""
-                value = {descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-              />
-              </Typography>
-            </Grid>
-            <Grid item xs ={6}>
-              <Typography variant="h5" color="initial" align ='center'>
-                Fecha inicio
-              <TextField size = 'small' fullWidth={true}
-                id="fechaInicio"
-                type='date'
-                label=""
-                value = {fechaInicio}
-                onChange={(e) => setFechaInicio(e.target.value)}
-              />
-              </Typography>
-              <Typography variant="h5" color="initial" pt ={5} align = 'center'>
-                Fecha fin
-              <TextField size = 'small' align = 'center' fullWidth = {true}
-                id="fechaFin"
-                type='date'
-                label=""
-                value = {fechaFin}
-                onChange={(e) => setFechaFin(e.target.value)}
-              />
-              </Typography>
-            </Grid>
-            <Grid item xs = {12}>
-              <Typography variant="h5" pt = {5} >Prioridad</Typography>
-              <Autocomplete
-                disablePortal
-                id="prioridad"
-                options={prioridades}
-                renderInput={(params) => <TextField {...params} size='small'/>}
-              />
-            </Grid>
-          </Grid>
-        </CardContent>
-        <CardActions>
-          <Button size="large" variant = 'contained'>
-            Guardar
+    <ThemeProvider theme={theme}>
+      <Paper elevation={3} style={{ padding: '10px', maxWidth: '700px', margin: '0 auto', marginTop: '40px' }}>
+        <Typography variant="h1" pt = {5} color="initial"></Typography>
+        <Typography variant="h2" sx={{ ...theme.titleText }} align="center">Crear Lista de Tareas</Typography>
+        <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Nombre de la Lista:</Typography>
+        <TextField
+          sx={{ ...theme.container }}
+          fullWidth
+          value={nombreLista}
+          onChange={handleNombreChange}
+        />
+        <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Descripción:</Typography>
+        <TextField
+          sx={{ ...theme.container }}
+          multiline
+          maxRows={3}
+          fullWidth
+          value={descripcionLista}
+          onChange={handleDescripcionChange}
+        />
+        <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Color de la Lista:</Typography>
+        <FormControl fullWidth sx={{ ...theme.container }}>
+          <Select
+            value={colorLista}
+            onChange={handleColorChange}
+          >
+            <MenuItem value="red">Rojo</MenuItem>
+            <MenuItem value="blue">Azul</MenuItem>
+            <MenuItem value="green">Verde</MenuItem>
+            <MenuItem value="yellow">Amarillo</MenuItem>
+          </Select>
+        </FormControl>
+        <Box display="flex" justifyContent="space-between" style={{ marginTop: '30px', marginBottom: '15px' }}>
+          <Button variant="contained" color="primary" size="large" onClick={handleSubmit}>
+            Crear Lista de Tareas
           </Button>
-          <Button variant="contained" size = 'large'>
-            Cancelar            
+          <Button variant="contained" color="error" size="large">
+            Cancelar
           </Button>
-        </CardActions>
-      </Card>
-      </Grid>
-    </div>
-    
-
-    
+        </Box>
+      </Paper>
+    </ThemeProvider>
   );
-}
+};
 
-const prioridades = [
-  {label : ""},
-  {label : 'Baja'},
-  {label : 'Normal'},
-  {label : 'Media'},
-  {label : 'Alta'},
-  
-]
+export default listaTareas;
