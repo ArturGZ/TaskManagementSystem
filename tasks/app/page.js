@@ -1,108 +1,114 @@
 'use client';
-
-import * as React from 'react';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid'
-import Divider from '@mui/material/Divider';
-//---
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-
-import data from './data.json';
-import { useState } from 'react';
-
-import { createTheme } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
-  },
-});
+import {FormControl, InputLabel} from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 
+import '../styles/theme.jsx'
 
-export default function MediaCard() {
-  const [tarea, setTarea] = useState();
-  const [descripcion, setDescripcion] = useState();
-  const [fechaInicio, setFechaInicio] = useState();
-  const [fechaFin, setFechaFin] = useState();
 
-  const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
-    setOpen(!open);
+function TaskList() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newState, setNewState] = useState('');
+
+  const handleAddTask = () => {
+    setTasks([
+      ...tasks,
+      {
+        id: tasks.length + 1,
+        task: newTask,
+        description: newDescription,
+        date: newDate,
+        state: newState,
+      },
+    ]);
+    setNewTask('');
+    setNewDescription('');
+    setNewDate('');
+    setNewState('');
+  };
+  const handleStateChange = (event) => {
+    setNewState(event.target.value);
   };
 
+
   return (
-    <div color = "primary">
-    <Card sx={{ maxWidth: 500 }}>
-      <CardContent >
-        <div >
-        <ListItemButton onClick={handleClick}>
-        <ListItemText >
-        < Typography gutterBottom variant="h5" component="div">
-          Cocinar 
-          </Typography>
-        </ListItemText>
-      </ListItemButton>
-      <Divider />
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText>
-          <Typography gutterBottom variant="h6" component="div">
-          Descripcion 
-          </Typography>
-          <Typography size="small" color="text.secondary">
-            Preparar comida para la familia
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div" >
-            Prioridad 
-          </Typography>
-          <Typography size="small" color="text.secondary"  >
-            baja
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            Fecha 
-          </Typography>
-          <Typography size="small" color="text.secondary" >
-            fecha Incio tarea
-          </Typography>
-          <Typography size="small" color="text.secondary" >
-            fecha finalizacion
-          </Typography>
-          </ListItemText>
-        </ListItemButton>
-      </Collapse>
-        
-        
-        </div>
-      </CardContent> 
+    <div align = 'center' style={{ maxWidth: '700px', margin: '0 auto', marginTop: '10em' }}> 
+    <Card align = 'center' sx={{ maxWidth: '700em' }}>
+      <div style={{background:'blue'}}>
+      <Typography gutterBottom variant="h2" component="div" >
+          Agregar Tareas
+      </Typography>
+      </div>
+      <Typography gutterBottom variant="h4" component="div">
+        Tareas
+      </Typography>
+      <TextField 
+        fullWidth
+        label="Tarea"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+          Descripcion
+      </Typography>
+      <TextField
+        fullWidth
+        label="Descripción"
+        value={newDescription}
+        onChange={(e) => setNewDescription(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+          Fecha Finalizacion
+      </Typography>
+      <TextField
+        fullWidth
+        type= 'date'
+        value={newDate}
+        onChange={(e) => setNewDate(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+        Estado
+      </Typography>
+      <FormControl fullWidth >
+      <InputLabel >Estado</InputLabel>
+      <Select
+          value={newState}
+          onChange={handleStateChange}
+        >
+          <MenuItem value="Completado">Completado</MenuItem>
+          <MenuItem value="Termiando">Termiando</MenuItem>
+        </Select>
 
-
-      <CardActions>
-      <FormControlLabel control={<Checkbox  />} label="Complete" align = "right" />        
-      </CardActions>
+      </FormControl>
+      <div style= {{margin:'1em'}}>
+      <Button variant="contained" color="primary" onClick={handleAddTask}>
+        Agregar Tarea
+      </Button>
+      </div>
+      
+    </Card>
+    <Card style={{ maxWidth: '700em', margin: '2em'}}>
+    <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            {task.task} - {task.description} - {task.date} -{task.state}
+          </li>
+        ))}
+      </ul>
     </Card>
     </div>
   );
 }
 
+export default TaskList;
