@@ -40,7 +40,7 @@ export default function UserLogin() {
 							name='email'
 							autoComplete='email'
 							autoFocus
-							inputProps={{ 'data-testid': 'email-user' }}
+							inputProps={{ 'data-testid': 'textField-email-user' }}
 						/>
 
 						<TextField
@@ -52,7 +52,7 @@ export default function UserLogin() {
 							type='password'
 							id='password'
 							autoComplete='current-password'
-							inputProps={{ 'data-testid': 'password-user' }}
+							inputProps={{ 'data-testid': 'textField-password-user' }}
 						/>
 
 						<Button
