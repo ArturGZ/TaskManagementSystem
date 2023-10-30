@@ -1,7 +1,9 @@
 'use client';
 
-import { AppBar, Box, Button, Toolbar, Typography, CssBaseline, Avatar, colors} from '@mui/material';
-import { useSession, signIn, signOut } from 'next-auth/react';
+// Common navigation bar foe all modules
+
+import { AppBar, Box, Button, Toolbar, Typography, CssBaseline, Avatar} from '@mui/material';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function Navbar() {
