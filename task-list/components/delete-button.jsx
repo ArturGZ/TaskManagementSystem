@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function DeleteButton({ onClick }) {
   return (
     <Button
+      data-testid = 'button'
       variant="contained"
       color="secondary"
       style={{
@@ -17,7 +18,8 @@ export default function DeleteButton({ onClick }) {
       }}
       onClick={onClick}
     >
-      <DeleteIcon style={{
+      <DeleteIcon data-testid = 'addicon'
+      style={{
         minWidth: '128px',
         height: '128px',
       }}/>

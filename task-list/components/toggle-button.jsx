@@ -13,14 +13,14 @@ const buttonStyle = {
 
 export default function ToggleButton({ onClick, showBigButtons }) {
   return (
-    <Box style={{ textAlign: 'center' }}>
-      <Fab
+    <Box data-testid = 'box' style={{ textAlign: 'center' }}>
+      <Fab data-testid = 'fab'
         style={buttonStyle}
         color="primary"
         onClick={onClick}
         aria-label="toggle"
       >
-        {showBigButtons ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
+        {showBigButtons ? <ArrowDropDownIcon data-testid = 'arrowdropdownicon' /> : <ArrowDropUpIcon data-testid = 'arrowdropupicon'/>}
       </Fab>
     </Box>
   );

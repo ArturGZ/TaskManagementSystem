@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function AddButton({ onClick }) {
   return (
     <Button
+      data-testid = 'button'
       variant="contained"
       color="primary"
       style={{
@@ -17,7 +18,8 @@ export default function AddButton({ onClick }) {
       }}
       onClick={onClick}
     >
-      <AddIcon style={{
+      <AddIcon data-testid = 'addicon'
+      style={{
         minWidth: '128px',
         height: '128px',
       }}/>

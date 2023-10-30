@@ -1,5 +1,5 @@
 import {useState,Fragment} from 'react';
-import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, ListItem, Button, Grid} from '@mui/material';
+import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, Button } from '@mui/material';
 export default function TaskList({ taskList, checkedItems, handleCheckboxChange, handleAddTaskClick}) {
   
   // Estados
@@ -21,29 +21,31 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange,
   };
 
   return (
-    <List>
+    <List data-testid = 'list'>
         <Fragment key={taskList.id}>
-          <ListItemButton style={{ backgroundColor: taskList.color,
+          <ListItemButton data-testid = 'listitembutton' style={{ backgroundColor: taskList.color,
             padding: '2%',
             borderRadius: '2px',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' 
           }} 
           onClick={() => onExpandItem(taskList.id)} selected={checkedItems.includes(taskList.id)}>
             <Checkbox
+              data-testid = 'checkbox'
               checked={checkedItems.includes(taskList.id)}
               onChange={() => onCheckboxChange(taskList.id)}
               onClick={(event) => event.stopPropagation()}  
             />
-            <ListItemText primary={taskList.name} secondary={taskList.description} />
+            <ListItemText data-testid = 'listitemtext' primary={taskList.name} secondary={taskList.description} />
           </ListItemButton>
-          <Divider />
+          <Divider data-testid = 'divider'/>
           <Collapse in={expand} timeout="auto" unmountOnExit  style={{
                 backgroundColor: taskList.color,
               }}>
             {taskList.tasks.map((task) => (
-              <List key={task.id}>
-                  <ListItemText primary={task.name} secondary={`From ${task.start} to ${task.due}`} />
-                  <ListItemText secondary={`Status: ${task.status}`} />                  
+              <List data-testid = 'list' key={task.id}>
+                  <ListItemText data-testid = 'listitemtext' primary={task.name} secondary={`${task.description}`} />
+                  <ListItemText data-testid = 'listitemtext' secondary={`Due: ${task.due}`} />   
+                  <ListItemText data-testid = 'listitemtext' secondary={`Status: ${task.status}`} />                  
               </List>
             ))}
             <Button onClick={() => onAddClick(taskList.id)}> Add </Button>
