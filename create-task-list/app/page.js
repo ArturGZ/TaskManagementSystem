@@ -5,7 +5,7 @@ import { Button, TextField, Typography, FormControl, InputLabel, Select, MenuIte
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
 
-const ListaTareas = () => {
+export default function listaTareas(){
   const [nombreLista, setNombreLista] = useState('');
   const [descripcionLista, setDescripcionLista] = useState('');
   const [colorLista, setColorLista] = useState('');
@@ -31,18 +31,18 @@ const ListaTareas = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center" pt = {3}>
         <Grid item xs={12} sm={10} md={8} lg={6}>
           <Paper elevation={3} style={{ padding: '10px' }}>
             <Typography variant="h2" sx={{ ...theme.titleText }} align="center">Crear Lista de Tareas</Typography>
-            <Typography variant="h5" sx={{ ...theme.normalText }} align="center">Nombre de la Lista:</Typography>
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Nombre de la Lista:</Typography>
             <TextField
               sx={{ ...theme.container }}
               fullWidth
               value={nombreLista}
               onChange={handleNombreChange}
             />
-            <Typography variant="h5" sx={{ ...theme.normalText }} align="center">Descripción:</Typography>
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Descripción:</Typography>
             <TextField
               sx={{ ...theme.container }}
               multiline
@@ -51,7 +51,7 @@ const ListaTareas = () => {
               value={descripcionLista}
               onChange={handleDescripcionChange}
             />
-            <Typography variant="h5" sx={{ ...theme.normalText }} align="center">Color de la Lista:</Typography>
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4}>Color de la Lista:</Typography>
             <FormControl fullWidth sx={{ ...theme.container }}>
               <Select
                 value={colorLista}
@@ -77,5 +77,3 @@ const ListaTareas = () => {
     </ThemeProvider>
   );
 };
-
-export default ListaTareas;
