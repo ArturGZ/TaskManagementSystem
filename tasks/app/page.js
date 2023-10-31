@@ -1,95 +1,114 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import {FormControl, InputLabel} from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-export default function Home() {
+
+import '../styles/theme.jsx'
+
+
+function TaskList() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newState, setNewState] = useState('');
+
+  const handleAddTask = () => {
+    setTasks([
+      ...tasks,
+      {
+        id: tasks.length + 1,
+        task: newTask,
+        description: newDescription,
+        date: newDate,
+        state: newState,
+      },
+    ]);
+    setNewTask('');
+    setNewDescription('');
+    setNewDate('');
+    setNewState('');
+  };
+  const handleStateChange = (event) => {
+    setNewState(event.target.value);
+  };
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div align = 'center' style={{ maxWidth: '700px', margin: '0 auto', marginTop: '10em' }}> 
+    <Card align = 'center' sx={{ maxWidth: '700em' }}>
+      <div style={{background:'blue'}}>
+      <Typography gutterBottom variant="h2" component="div" >
+          Agregar Tareas
+      </Typography>
       </div>
+      <Typography gutterBottom variant="h4" component="div">
+        Tareas
+      </Typography>
+      <TextField 
+        fullWidth
+        label="Tarea"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+          Descripcion
+      </Typography>
+      <TextField
+        fullWidth
+        label="Descripción"
+        value={newDescription}
+        onChange={(e) => setNewDescription(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+          Fecha Finalizacion
+      </Typography>
+      <TextField
+        fullWidth
+        type= 'date'
+        value={newDate}
+        onChange={(e) => setNewDate(e.target.value)}
+      />
+      <Typography gutterBottom variant="h4" component="div">
+        Estado
+      </Typography>
+      <FormControl fullWidth >
+      <InputLabel >Estado</InputLabel>
+      <Select
+          value={newState}
+          onChange={handleStateChange}
+        >
+          <MenuItem value="Completado">Completado</MenuItem>
+          <MenuItem value="Termiando">Termiando</MenuItem>
+        </Select>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      </FormControl>
+      <div style= {{margin:'1em'}}>
+      <Button variant="contained" color="primary" onClick={handleAddTask}>
+        Agregar Tarea
+      </Button>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      
+    </Card>
+    <Card style={{ maxWidth: '700em', margin: '2em'}}>
+    <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            {task.task} - {task.description} - {task.date} -{task.state}
+          </li>
+        ))}
+      </ul>
+    </Card>
+    </div>
+  );
 }
+
+export default TaskList;
