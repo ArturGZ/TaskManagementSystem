@@ -41,7 +41,7 @@ export default function ListaTareas(){
               fullWidth
               value={nombreLista}
               onChange={handleNombreChange}
-              data-testid='nameContainer'
+              inputProps={{ "data-testid": "nameContainer" }}
             />
             <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4} data-testid='description'>Descripción:</Typography>
             <TextField
@@ -51,10 +51,10 @@ export default function ListaTareas(){
               fullWidth
               value={descripcionLista}
               onChange={handleDescripcionChange}
-              data-testid='descriptionContainer'
+              inputProps={{ "data-testid": "descriptionContainer" }}
             />
             <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4} data-testid='color'>Color de la Lista:</Typography>
-            <FormControl fullWidth sx={{ ...theme.container }} data-testid='colorOptions'>
+            <FormControl fullWidth sx={{ ...theme.container }} data-testid= "colorOptions">
               <Select
                 value={colorLista}
                 onChange={handleColorChange}

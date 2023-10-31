@@ -18,5 +18,23 @@ describe('create new task', () => {
     expect(screen.getByTestId('cancel')).toBeInTheDocument();
 
   });
+
+  it('Change the value of the Name field in the List', () => {
+    render(<ListaTareas />);
+    const nameContainer = screen.getByTestId('nameContainer');
+    
+    fireEvent.change(nameContainer, { target: { value: 'New List' } });
+  
+    expect(nameContainer).toHaveValue('New List');
+  });
+
+  it('Change the value of the List description field', () => {
+    render(<ListaTareas />);
+    const nameContainer = screen.getByTestId('descriptionContainer');
+    
+    fireEvent.change(nameContainer, { target: { value: 'Description' } });
+  
+    expect(nameContainer).toHaveValue('Description');
+  });
   
 });
