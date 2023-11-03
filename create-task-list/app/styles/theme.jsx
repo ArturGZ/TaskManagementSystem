@@ -37,12 +37,37 @@ const theme = createTheme({
         color: 'black',
     },
 
+    redColorStyle: {
+      color: 'red', 
+      backgroundColor: 'lightgray', 
+      fontWeight: 'bold'
+    },
+
+    blueColorStyle: {
+      color: 'blue', 
+      backgroundColor: 'lightgray', 
+      fontWeight: 'bold'
+    },
+
+    greenColorStyle: {
+      color: 'green', 
+      backgroundColor: 'lightgray', 
+      fontWeight: 'bold'
+    },
+
+    yellowColorStyle: {
+      color: 'yellow', 
+      backgroundColor: 'lightgray', 
+      fontWeight: 'bold'
+    },
+
     normalText: {
         color: 'black',
+        fontWeight: 'bold'
     },
 
     container :{
-        backgroundColor: 'white', // Fondo blanco
+        backgroundColor: 'white',
     }
 
 
