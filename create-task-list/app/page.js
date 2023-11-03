@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { Button, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Paper, Box, Grid } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
+import Swal from 'sweetalert2';
 
 export default function TaskList() {
   const [listName, setListName] = useState('');
   const [listDescription, setListDescription] = useState('');
-  const [listColor, setListColor] = useState('');
+  const [listColor, setListColor] = useState("#3B4BD8");
 
   const handleNameChange = (event) => {
     setListName(event.target.value);
@@ -23,10 +24,15 @@ export default function TaskList() {
   };
 
   const handleSubmit = () => {
-    // Here you can perform the action to share the information
-    console.log('List Name:', listName);
-    console.log('Description:', listDescription);
-    console.log('Color:', listColor);
+    if (!listName ) {
+      Swal.fire('Error', 'Enter a name for the task', 'error');
+    } else {
+      // Here you can perform the action to share the information
+      console.log('List Name:', listName);
+      console.log('Description:', listDescription);
+      console.log('Color:', listColor);
+      Swal.fire('Success', 'Task list created successfully', 'success');
+    }
   };
 
   return (
@@ -63,11 +69,18 @@ export default function TaskList() {
               List Color:
             </Typography>
             <FormControl fullWidth sx={{ ...theme.container }} data-testid="colorOptions" style={{ backgroundColor: listColor }}>
-              <Select value={listColor} onChange={handleColorChange} style={{ fontWeight: 'bold' }}>
-                <MenuItem value="#E25656" sx ={{ ...theme.redColorStyle }}>Red</MenuItem>
-                <MenuItem value="#5694E2" sx = {{ ...theme.blueColorStyle }} >Blue</MenuItem>
-                <MenuItem value="#56E26F" sx = {{ ...theme.greenColorStyle }} >Green</MenuItem>
-                <MenuItem value="#D9E256" sx = {{ ...theme.yellowColorStyle }} >Yellow</MenuItem>
+              <Select value = {listColor} onChange={handleColorChange} style={{ fontWeight: 'bold', color:'black' }}>
+                <MenuItem value="#DE4035" sx={{ ...theme.redColorStyle }}>Red</MenuItem>
+                <MenuItem value="#FFC0CB" sx = {{ ...theme.pinkColorStyle }} >Pink</MenuItem>
+                <MenuItem value="#FFB700" sx = {{ ...theme.orangeColorStyle }} >Orange</MenuItem>
+                <MenuItem value="#FFFF99" sx = {{ ...theme.yellowColorStyle }} >Yellow</MenuItem>
+                <MenuItem value="#90EE90" sx = {{ ...theme.lightGreenColorStyle }} >Light Green</MenuItem>
+                <MenuItem value="#1A8127" sx = {{ ...theme.darkGreenColorStyle }} >Dark Green</MenuItem>
+                <MenuItem value="#ADD8E6" sx = {{ ...theme.lightBlueColorStyle }} >Light Blue</MenuItem>
+                <MenuItem value="#3B4BD8" sx = {{ ...theme.darkBlueColorStyle}} >Dark Blue</MenuItem>
+                <MenuItem value="#B19CD9" sx = {{ ...theme.lightPurpleColorStyle }} >Light Purple</MenuItem>
+                <MenuItem value="#9370DB" sx = {{ ...theme.darkPurpleColorStyle }} >Dark Purple</MenuItem>
+                <MenuItem value="#D3D3D3" sx = {{ ...theme.grayColorStyle }}>Gray</MenuItem>
               </Select>
             </FormControl>
             <Box display="flex" justifyContent="space-between" style={{ marginTop: '30px', marginBottom: '15px' }}>
