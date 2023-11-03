@@ -38,26 +38,68 @@ const theme = createTheme({
     },
 
     redColorStyle: {
-      color: 'red', 
-      backgroundColor: 'lightgray', 
+      color: 'black', 
+      backgroundColor: '#DA2C20', 
       fontWeight: 'bold'
     },
 
-    blueColorStyle: {
-      color: 'blue', 
-      backgroundColor: 'lightgray', 
+    pinkColorStyle: {
+      color: 'black', 
+      backgroundColor: '#FFC0CB', 
       fontWeight: 'bold'
     },
 
-    greenColorStyle: {
-      color: 'green', 
-      backgroundColor: 'lightgray', 
+    orangeColorStyle: {
+      color: 'black', 
+      backgroundColor: '#FFB700', 
       fontWeight: 'bold'
     },
 
     yellowColorStyle: {
-      color: 'yellow', 
-      backgroundColor: 'lightgray', 
+      color: 'black', 
+      backgroundColor: '#FFFF99', 
+      fontWeight: 'bold'
+    },
+
+    lightGreenColorStyle: {
+      color: 'black', 
+      backgroundColor: '#90EE90', 
+      fontWeight: 'bold'
+    },
+
+    darkGreenColorStyle: {
+      color: 'white', 
+      backgroundColor: '#1A8127', 
+      fontWeight: 'bold'
+    },
+
+    lightBlueColorStyle: {
+      color: 'black', 
+      backgroundColor: '#ADD8E6', 
+      fontWeight: 'bold'
+    },
+
+    darkBlueColorStyle: {
+      color: 'black', 
+      backgroundColor: '#3B4BD8', 
+      fontWeight: 'bold'
+    },
+
+    lightPurpleColorStyle: {
+      color: 'black', 
+      backgroundColor: '#B19CD9', 
+      fontWeight: 'bold'
+    },
+
+    darkPurpleColorStyle: {
+      color: 'white', 
+      backgroundColor: '#9370DB', 
+      fontWeight: 'bold'
+    },
+
+    grayColorStyle: {
+      color: 'black', 
+      backgroundColor: '#D3D3D3', 
       fontWeight: 'bold'
     },
 
