@@ -84,10 +84,10 @@ export default function TaskList() {
               </Select>
             </FormControl>
             <Box display="flex" justifyContent="space-between" style={{ marginTop: '30px', marginBottom: '15px' }}>
-              <Button variant="contained" color="primary" size="large" onClick={handleSubmit} data-testid="create">
+              <Button variant="contained" color="primary" size="large" onClick={handleSubmit} data-testid="create" sx = {{ fontWeight: 'bold', '&:hover': {transform: 'scale(1.3)', transition : 'transform 0.5s'} }}>
                 Create Task List
               </Button>
-              <Button variant="contained" color="error" size="large" data-testid="cancel">
+              <Button variant="contained" color="error" size="large" data-testid="cancel" sx = {{ fontWeight: 'bold', '&:hover': {transform: 'scale(1.3)', transition : 'transform 0.5s'} }}>
                 Cancel
               </Button>
             </Box>
