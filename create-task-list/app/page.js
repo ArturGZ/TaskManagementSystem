@@ -1,95 +1,81 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client'; 
 
-export default function Home() {
+import React, { useState } from 'react';
+import { Button, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Paper, Box, Grid } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styles/theme';
+
+export default function ListaTareas(){
+  const [nombreLista, setNombreLista] = useState('');
+  const [descripcionLista, setDescripcionLista] = useState('');
+  const [colorLista, setColorLista] = useState('');
+
+  const handleNombreChange = (event) => {
+    setNombreLista(event.target.value);
+  };
+
+  const handleDescripcionChange = (event) => {
+    setDescripcionLista(event.target.value);
+  };
+
+  const handleColorChange = (event) => {
+    setColorLista(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Aquí se puede realizar la acción de compartir la información
+    console.log('Nombre:', nombreLista);
+    console.log('Descripción:', descripcionLista);
+    console.log('Color:', colorLista);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <ThemeProvider theme={theme}>
+      <Grid container spacing={2} justifyContent="center" pt = {3}>
+        <Grid item xs={12} sm={10} md={8} lg={6}>
+          <Paper elevation={3} style={{ padding: '10px' }}>
+            <Typography variant="h2" sx={{ ...theme.titleText }} align="center" data-testid='title'>Crear Lista de Tareas</Typography>
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4} data-testid='nameList'>Nombre de la Lista:</Typography>
+            <TextField
+              sx={{ ...theme.container }}
+              fullWidth
+              value={nombreLista}
+              onChange={handleNombreChange}
+              inputProps={{ "data-testid": "nameContainer" }}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4} data-testid='description'>Descripción:</Typography>
+            <TextField
+              sx={{ ...theme.container }}
+              multiline
+              maxRows={3}
+              fullWidth
+              value={descripcionLista}
+              onChange={handleDescripcionChange}
+              inputProps={{ "data-testid": "descriptionContainer" }}
+            />
+            <Typography variant="h5" sx={{ ...theme.normalText }} align="center" pt = {4} data-testid='color'>Color de la Lista:</Typography>
+            <FormControl fullWidth sx={{ ...theme.container }} data-testid= "colorOptions">
+              <Select
+                value={colorLista}
+                onChange={handleColorChange}
+              >
+                <MenuItem value="red">Rojo</MenuItem>
+                <MenuItem value="blue">Azul</MenuItem>
+                <MenuItem value="green">Verde</MenuItem>
+                <MenuItem value="yellow">Amarillo</MenuItem>
+              </Select>
+            </FormControl>
+            <Box display="flex" justifyContent="space-between" style={{ marginTop: '30px', marginBottom: '15px' }}>
+              <Button variant="contained" color="primary" size="large" onClick={handleSubmit} data-testid='create'>
+                Crear Lista de Tareas
+              </Button>
+              <Button variant="contained" color="error" size="large" data-testid='cancel'>
+                Cancelar
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
+  );
+};
