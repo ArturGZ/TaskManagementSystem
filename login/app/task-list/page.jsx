@@ -1,41 +1,42 @@
 'use client';
 import React, {useState} from 'react'
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../styles/theme';
-import TaskList from '../components/task-list'
-import DeleteButton from '../components/delete-button';
-import AddButton from '../components/add-button';
-import ToggleButton from '../components/toggle-button';
+import theme from '../../styles/theme';
+import TaskList from '../../components/task-list'
+import DeleteButton from '../../components/delete-button';
+import AddButton from '../../components/add-button';
+import ToggleButton from '../../components/toggle-button';
 import { Grid, Typography} from '@mui/material';
+import Link from 'next/link';
 
 export default function Home() {
 
    // Datos de ejemplo 
    const initialTaskLists = [
-    { id: 1, name: 'Lista de Tareas 1', description: 'Descripción de la Lista 1' , color: '#9A5343', tasks: [
-      {id: 1, name: 'Tarea 1 de la Lista 1', description:'Descripcion tarea 1', due: '10-11-2023', status: 'Incomplete'},
-      {id: 2, name: 'Tarea 2 de la Lista 1', description:'Descripcion tarea 2', due: '10-11-2023', status: 'Incomplete'},
-      {id: 3, name: 'Tarea 3 de la Lista 1', description:'Descripcion tarea 3', due: '10-11-2023', status: 'Incomplete'}
+    { id: 1, name: 'Task List 1', description: 'Description List 1' , color: '#9A5343', tasks: [
+      {id: 1, name: 'Taks 1 of List 1', description:'Description Task 1', due: '10-11-2023', status: 'Incomplete'},
+      {id: 2, name: 'Task 2 of List 1', description:'Description Task 2', due: '10-11-2023', status: 'Incomplete'},
+      {id: 3, name: 'Task 3 of List 1', description:'Description Task 3', due: '10-11-2023', status: 'Incomplete'}
     ]},
-    { id: 2, name: 'Lista de Tareas 2', description: 'Descripción de la Lista 2' , color: 'blue', tasks: [
-      {id: 1, name: 'Tarea 1 de la Lista 2', description:'Descripcion tarea 1', due: '10-11-2023', status: 'Incomplete'},
-      {id: 2, name: 'Tarea 2 de la Lista 2', description:'Descripcion tarea 2', due: '10-11-2023', status: 'Incomplete'},
-      {id: 3, name: 'Tarea 3 de la Lista 2', description:'Descripcion tarea 3', due: '10-11-2023', status: 'Incomplete'}
+    { id: 2, name: 'Task List 2', description: 'Description List 2' , color: 'blue', tasks: [
+      {id: 1, name: 'Taks 1 of List 2', description:'Description Task 1', due: '10-11-2023', status: 'Incomplete'},
+      {id: 2, name: 'Task 2 of List 2', description:'Description Task 2', due: '10-11-2023', status: 'Incomplete'},
+      {id: 3, name: 'Task 3 of List 2', description:'Description Task 3', due: '10-11-2023', status: 'Incomplete'}
     ]},
-    { id: 3, name: 'Lista de Tareas 3', description: 'Descripción de la Lista 3' , color: 'yellow', tasks: [
-      {id: 1, name: 'Tarea 1 de la Lista 3', description:'Descripcion tarea 1', due: '10-11-2023', status: 'Incomplete'},
-      {id: 2, name: 'Tarea 2 de la Lista 3', description:'Descripcion tarea 2', due: '10-11-2023', status: 'Incomplete'},
-      {id: 3, name: 'Tarea 3 de la Lista 3', description:'Descripcion tarea 3', due: '10-11-2023', status: 'Incomplete'}
+    { id: 3, name: 'Task List 3', description: 'Description List 3' , color: 'yellow', tasks: [
+      {id: 1, name: 'Taks 1 of List 3', description:'Description Task 1', due: '10-11-2023', status: 'Incomplete'},
+      {id: 2, name: 'Task 2 of List 3', description:'Description Task 2', due: '10-11-2023', status: 'Incomplete'},
+      {id: 3, name: 'Task 3 of List 3', description:'Description Task 3', due: '10-11-2023', status: 'Incomplete'}
     ]},
-    { id: 4, name: 'Lista de Tareas 4', description: 'Descripción de la Lista 4' , color: 'red', tasks: [
-      {id: 1, name: 'Tarea 1 de la Lista 4', description:'Descripcion tarea 1', due: '10-11-2023', status: 'Incomplete'},
-      {id: 2, name: 'Tarea 2 de la Lista 4', description:'Descripcion tarea 2', due: '10-11-2023', status: 'Incomplete'},
-      {id: 3, name: 'Tarea 3 de la Lista 4', description:'Descripcion tarea 3', due: '10-11-2023', status: 'Incomplete'}
+    { id: 4, name: 'Task List 4', description: 'Description List 4' , color: 'red', tasks: [
+      {id: 1, name: 'Taks 1 of List 4', description:'Description Task 1', due: '10-11-2023', status: 'Incomplete'},
+      {id: 2, name: 'Task 2 of List 4', description:'Description Task 2', due: '10-11-2023', status: 'Incomplete'},
+      {id: 3, name: 'Task 3 of List 4', description:'Description Task 3', due: '10-11-2023', status: 'Incomplete'}
     ]},
-    { id: 5, name: 'Lista de Tareas 5', description: 'Descripción de la Lista 5' , color: 'blue', tasks: [
-      {id: 1, name: 'Tarea 1 de la Lista 5', description:'Descripcion tarea 1', due: '10-11-2023', status: 'Incomplete'},
-      {id: 2, name: 'Tarea 2 de la Lista 5', description:'Descripcion tarea 2', due: '10-11-2023', status: 'Incomplete'},
-      {id: 3, name: 'Tarea 3 de la Lista 5', description:'Descripcion tarea 3', due: '10-11-2023', status: 'Incomplete'}
+    { id: 5, name: 'Task List 5', description: 'Description List 5' , color: 'blue', tasks: [
+      {id: 1, name: 'Taks 1 of List 5', description:'Description Task 1', due: '10-11-2023', status: 'Incomplete'},
+      {id: 2, name: 'Task 2 of List 5', description:'Description Task 2', due: '10-11-2023', status: 'Incomplete'},
+      {id: 3, name: 'Task 3 of List 5', description:'Description Task 3', due: '10-11-2023', status: 'Incomplete'}
     ]},
   ];
 
@@ -83,8 +84,8 @@ export default function Home() {
 
     const newTaskList = {
       id: newTaskListId,
-      name: `Lista de Tareas ${newTaskListId}`,
-      description: `Descripción de la Lista ${newTaskListId}`,
+      name: `Task List ${newTaskListId}`,
+      description: `Description List ${newTaskListId}`,
       color: 'red',
       tasks: []
     };
@@ -99,7 +100,7 @@ export default function Home() {
     const newTask = {
       id: newTaskId,
       name: `Tarea ${newTaskId} de la lista ${taskListId}`,
-      description:`Descripcion tarea ${newTaskId}`,
+      description:`Description Task ${newTaskId}`,
       due: '25-12-2023',
       status: 'Incomplete'
     }
@@ -124,7 +125,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
     <div>
-      <Typography style={{backgroundColor: theme.palette.primary.main,  // Color de fondo
+      <Typography style={{backgroundColor: '#bf34bb' ,  // Color de fondo
         color: theme.palette.primary.contrastText,    // Color del texto
         padding: theme.spacing(2),                    // Espaciado
         textAlign: 'center',
@@ -146,7 +147,9 @@ export default function Home() {
       {showBigButtons && (
           <Grid item xs={1} sm={1} md={1}>
             <DeleteButton onClick={() => handleDeleteButtonClick()} />
-            <AddButton onClick={() => handleAddButtonClick()} />
+            <Link href='/tasks' style={{textDecoration: 'none'}} >
+              <AddButton onClick={() => handleAddButtonClick()} />
+            </Link>
           </Grid>
         )}
         <ToggleButton

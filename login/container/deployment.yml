@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login
+  template:
+    metadata:
+      labels:
+        app: login
+    spec:
+      containers:
+        - name: login
+          image: login:latest
+          ports:
+          - containerPort: 8080
+          env:
+            - name: NEXTAUTH_URL
+              valueFrom: 
+                configMapKeyRef:
+                  name: login-cm
+                  key: NEXTAUTH_URL
+            - name: FACEBOOK_CLIENT_ID
+              valueFrom: 
+                secretKeyRef:
+                  name: login-secret
+                  key: FACEBOOK_CLIENT_ID
+            - name: FACEBOOK_CLIENT_SECRET
+              valueFrom: 
+                secretKeyRef:
+                  name: login-secret
+                  key: FACEBOOK_CLIENT_SECRET
+          imagePullPolicy: Never
+          securityContext:
+            runAsUser: 101
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+              memory: 512Mi
+          volumeMounts:
+            - name: login-cache
+              mountPath: /var/cache/login
+            - name: login-pid
+              mountPath: /var/run/
+      volumes:
+        - name: login-cache
+          emptyDir: {}
+        - name: login-pid
+          emptyDir: {}
