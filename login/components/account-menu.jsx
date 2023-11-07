@@ -6,6 +6,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useState, Fragment } from 'react';
 import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function AccountMenu() {
 
@@ -73,12 +74,14 @@ export default function AccountMenu() {
           Settings
         </MenuItem>
         
-        <MenuItem onClick={() => signOut()}>
-          <ListItemIcon>
-            <Logout fontSize="medium" />
-          </ListItemIcon>
-					Sign out
-        </MenuItem>
+        <Link href='/' style={{textDecoration: 'none', color:'inherit'}}>
+          <MenuItem onClick={() => signOut()}>
+            <ListItemIcon>
+              <Logout fontSize="medium" />
+            </ListItemIcon>
+            Sign out
+          </MenuItem>
+        </Link>
       </Menu>
     </Fragment>
   );

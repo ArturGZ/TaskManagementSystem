@@ -9,7 +9,7 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import TaskIcon from '@mui/icons-material/Task';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import theme from './styles/theme';
+import theme from '../../styles/theme';
 import Swal from 'sweetalert2';
 
 export default function TaskList() {
@@ -32,14 +32,6 @@ export default function TaskList() {
     setListColor(event.target.value);
   };
 
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
-
   const handleSubmit = () => {
     if (!listName ) {
       Swal.fire('Error', 'Enter a name for the task', 'error');
@@ -54,47 +46,6 @@ export default function TaskList() {
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Task Management System
-          </Typography>
-          <IconButton color="inherit" aria-label="notifications">
-            <NotificationsIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerClose} sx = {{ width: drawerWidth, padding: '25' }}>
-            <List>
-              <ListItem key="Task List">
-                <ListItemButton sx = {{ marginTop: '100px' }}>
-                  <ListItemIcon>
-                    <FormatListNumberedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Task List" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem key="Create Task List">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NoteAddIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Create Task List" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem key="Tasks">
-                <ListItemButton>
-                  <ListItemIcon>
-                    <TaskIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Tasks" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-      </Drawer>
       <Grid container spacing={2} justifyContent="center" pt={3}>
         <Grid item xs={12} sm={10} md={8} lg={6}>
           <Paper elevation={3} style={{ padding: '10px' }}>
