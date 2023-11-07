@@ -54,7 +54,7 @@ function TaskList() {
 
         <Card align = 'center' sx={{ maxWidth: '700em' }}>
           <div style={{background:'#418fe8'}}>
-          <Typography gutterBottom variant="h2" component="div" >
+          <Typography gutterBottom variant="h2" component="div" data-testid="tareas" >
               Add Tasks
           </Typography>
           </div>
@@ -67,7 +67,7 @@ function TaskList() {
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
           />
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography gutterBottom variant="h4" component="div" data-testid="descripcion">
               Description
           </Typography>
           <TextField
@@ -76,7 +76,7 @@ function TaskList() {
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
           />
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography gutterBottom variant="h4" component="div" data-testid="fechaFinalizacion">
               Date Finish
           </Typography>
           <TextField
@@ -85,7 +85,7 @@ function TaskList() {
             value={newDate}
             onChange={(e) => setNewDate(e.target.value)}
           />
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography gutterBottom variant="h4" component="div" data-testid="estado"> 
             Status
           </Typography>
           <FormControl fullWidth >
@@ -100,7 +100,7 @@ function TaskList() {
 
           </FormControl>
           <div style= {{margin:'1em'}}>
-          <Button variant="contained" color="primary" onClick={handleAddTask}>
+          <Button variant="contained" color="primary" onClick={handleAddTask} data-testid="agregarTarea">
             Add task
           </Button>
           </div>
