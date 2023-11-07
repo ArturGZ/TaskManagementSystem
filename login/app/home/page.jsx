@@ -50,7 +50,7 @@ export default function Home() {
 			</Grid>
 			<Grid item xs={12} sm={6} md={4}>
 				<Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', mx: 4, my: 8 }}>
-					<Link href={session ? '/': '/login'} style={{textDecoration: 'none'}}>
+					<Link href={session ? '/create-task-list': '/login'} style={{textDecoration: 'none'}}>
 						<CardActionArea>
 							<CardContent>
 								<Typography gutterBottom variant="h5" component="div" color='black'>

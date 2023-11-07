@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import '../../styles/theme.jsx'
 
 
-function TaskList() {
+function TaskList_task() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -122,4 +122,4 @@ function TaskList() {
   );
 }
 
-export default TaskList;
+export default TaskList_task;
