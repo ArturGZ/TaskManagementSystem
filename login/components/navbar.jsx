@@ -8,6 +8,8 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import AccountMenu from './account-menu';
 import DrawerMenu from './drawer-menu';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../styles/theme';
 
 export default function Navbar() {
 
@@ -19,45 +21,47 @@ export default function Navbar() {
 		}
 
     return (
-		<Box sx={{ flexGrow: 1 }}>
-			<CssBaseline />	{/* Eliminate unwanted margins */}
-			
-			<AppBar position='static' sx={{ boxShadow: 'md' }} data-testid='appbar'>
-				<Toolbar sx= {{ justifyContent: 'space-between' }} data-testid='toolbar'>
+		<ThemeProvider theme={theme}>
+			<Box sx={{ flexGrow: 1 }}>
+				<CssBaseline />	{/* Eliminate unwanted margins */}
+				
+				<AppBar position='static' sx={{ boxShadow: 'md' }} data-testid='appbar'>
+					<Toolbar sx= {{ justifyContent: 'space-between' }} data-testid='toolbar'>
 
-					<Box alignItems='center'>
-						{/* For the side panel */}
-						<DrawerMenu />	
+						<Box alignItems='center'>
+							{/* For the side panel */}
+							<DrawerMenu />	
 
-						<Link href='/'>
-							<Tooltip title={'Kairos'} arrow TransitionComponent={Zoom}>
-								<Button variant='text' size='small' data-testid='btn-navbar-home'>
-									<Typography variant='h5' sx={{ flexGrow: 1, color: 'white' }} data-testid='name-app'>
-										Kairos
+							<Link href='/'>
+								<Tooltip title={'Kairos'} arrow TransitionComponent={Zoom}>
+									<Button variant='text' size='small' data-testid='btn-navbar-home'>
+										<Typography variant='h5' sx={{ flexGrow: 1, color: 'white' }} data-testid='name-app'>
+											Kairos
+										</Typography>
+									</Button>
+								</Tooltip>
+							</Link>
+						</Box>
+
+						{/* Dynamic part of navbar */}
+						{status === 'authenticated' ? (
+							<AccountMenu />	// For account options from user avatar
+						) : status === 'loading' ? (
+							<CircularProgress color='inherit'/> // While getting the session state
+						) : (
+							<>
+							<Link href='/login' >
+								<Button variant='outlined' data-testid='btn-signin'>
+									<Typography variant='body2' sx={{ flexGrow: 1, color: 'white' }}>
+										Sign In
 									</Typography>
 								</Button>
-							</Tooltip>
-						</Link>
-					</Box>
-
-					{/* Dynamic part of navbar */}
-					{status === 'authenticated' ? (
-						<AccountMenu />	// For account options from user avatar
-					) : status === 'loading' ? (
-						<CircularProgress color='inherit'/> // While getting the session state
-					) : (
-						<>
-						<Link href='/login' >
-							<Button variant='outlined' data-testid='btn-signin'>
-								<Typography variant='body2' sx={{ flexGrow: 1, color: 'white' }}>
-									Sign In
-								</Typography>
-							</Button>
-						</Link>
-						</>
-					)}
-				</Toolbar>
-			</AppBar>
-		</Box>
+							</Link>
+							</>
+						)}
+					</Toolbar>
+				</AppBar>
+			</Box>
+		</ThemeProvider>
     );
 }

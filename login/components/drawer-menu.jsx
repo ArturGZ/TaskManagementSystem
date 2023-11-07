@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 
 export default function DrawerMenu() {
     
-	const { status } = useSession();
+	const { data: session } = useSession();
 
 	// Determines if the drawer is open
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -80,7 +80,7 @@ export default function DrawerMenu() {
 
 				<ListItem key='Add task' disablePadding>
 					{/* If the user is unauthenticated, it goes to the login */}
-					<ListItemButton href={status ? '/tasks': '/login'}>
+					<ListItemButton href={session ? '/tasks': '/login'}>
 						<ListItemIcon>
 							<AddTask />
 						</ListItemIcon>
@@ -89,7 +89,7 @@ export default function DrawerMenu() {
 				</ListItem>
 
 				<ListItem key='Task list' disablePadding>
-					<ListItemButton href={status ? '/task-list': '/login'}>
+					<ListItemButton href={session ? '/task-list': '/login'}>
 						<ListItemIcon>
 							<Checklist />
 						</ListItemIcon>
@@ -98,7 +98,7 @@ export default function DrawerMenu() {
 				</ListItem>
 
 				<ListItem key='Create task list' disablePadding>
-					<ListItemButton href={status ? '/home': '/login'}>
+					<ListItemButton href={session ? '/create-task-list': '/login'}>
 						<ListItemIcon>
 							<PlaylistAdd />
 						</ListItemIcon>
