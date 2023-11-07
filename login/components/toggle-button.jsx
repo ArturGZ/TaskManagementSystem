@@ -5,9 +5,9 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const buttonStyle = {
   position: 'fixed',
-  bottom: 0, // Pegado al borde inferior
-  left: '50%', // Centrado horizontalmente
-  transform: 'translateX(-50%)', // Centrado horizontalmente
+  bottom: 0, 
+  left: '50%', 
+  transform: 'translateX(-50%)', 
   borderRadius: '50%', 
 };
 

@@ -46,7 +46,7 @@ describe('Task List', () => {
         render(<DeleteButton/>);
 
         expect(screen.getByTestId('button')).toBeInTheDocument();
-        expect(screen.getByTestId('addicon')).toBeInTheDocument();
+        expect(screen.getByTestId('delicon')).toBeInTheDocument();
 
     });
 

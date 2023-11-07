@@ -1,21 +1,24 @@
 import {useState,Fragment} from 'react';
 import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, Button } from '@mui/material';
+import Link from 'next/link';
+
 export default function TaskList({ taskList, checkedItems, handleCheckboxChange, handleAddTaskClick}) {
   
-  // Estados
+  // States
   const [expand, setExpand] = useState(false);
 
-  // Función para exponer la id en caso de click al checkbox
+  // Function to share checked task lists id
   const onCheckboxChange = (taskListId) => {
     handleCheckboxChange(taskListId);
     console.log(checkedItems);
   };
 
-  // Función para mostrar las tareas de la lista
+  // Function to whoe tasks in a list
   const onExpandItem = () => {
       setExpand(!expand);
   };
   
+  // Function to share clicked task list id to add a new task
   const onAddClick = (taskListId) => {
     handleAddTaskClick(taskListId);
   };
@@ -48,7 +51,9 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange,
                   <ListItemText data-testid = 'listitemtext' secondary={`Status: ${task.status}`} />                  
               </List>
             ))}
-            <Button onClick={() => onAddClick(taskList.id)}> Add </Button>
+            <Link href="/tasks" style={{ textDecoration: 'none' }}>
+              <Button onClick={() => onAddClick(taskList.id)}> Add </Button>
+            </Link>
           </Collapse>
           
         </Fragment>

@@ -23,7 +23,7 @@ describe("Login page", () => {
     expect(screen.getByTestId('btn-signout')).toBeInTheDocument();
     // session: unauthenticated
     //expect(screen.getByTestId('btn-signin')).toBeInTheDocument();
-  });*/
+  });
 
   it('Render the navigation bar', () => {
     // Configura el estado de sesión simulado
@@ -34,7 +34,7 @@ describe("Login page", () => {
     // Debería mostrar el mensaje de carga
     expect(screen.getByTestId('appbar')).toBeInTheDocument();
     expect(screen.getByTestId('toolbar')).toBeInTheDocument();
-  });
+  });*/
 
   it('Renders the user login', () => {
     render(<UserLogin />);

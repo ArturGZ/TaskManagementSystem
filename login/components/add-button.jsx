@@ -10,18 +10,18 @@ export default function AddButton({ onClick }) {
       color="primary"
       style={{
         position: 'fixed',
-        bottom: '8px',
-        left: '8px', 
+        bottom: '2%',
+        left: '5%',
         borderRadius: '50%',
-        minWidth: '128px',
-        height: '156px',
+        width: 'auto',
+        height: 'auto',
+        padding: '3%',
       }}
       onClick={onClick}
     >
       <AddIcon data-testid = 'addicon'
       style={{
-        minWidth: '128px',
-        height: '128px',
+        fontSize: '400%',
       }}/>
     </Button>
   );

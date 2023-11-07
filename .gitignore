@@ -1,5 +1,4 @@
 /create-task-list
-/login
 /tasks
 create-task-list/next.config.js
 create-task-list/package-lock.json
