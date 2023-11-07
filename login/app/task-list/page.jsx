@@ -17,11 +17,12 @@ export default function Home() {
 
   // Function to get data from local storage
   const getStoredData = () => {
+    if(isClient){
         const storedData = localStorage.getItem('taskLists');
         return storedData ? JSON.parse(storedData) : initialTaskLists;
+    }  
     }
   
-
   // States
   const [taskLists, setTaskLists] = useState(getStoredData());
   const [checkedItems, setCheckedItems] = useState([]);
