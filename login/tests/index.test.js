@@ -1,11 +1,11 @@
-import ListaTareas from '../app/page';
+import TaskList from '@/app/create-task-list/page';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 describe('create new task', () => {
   it('renders the view', () => {
-    render(<ListaTareas />);
+    render(<TaskList />);
 
     expect(screen.getByTestId('title')).toBeInTheDocument();
     expect(screen.getByTestId('nameList')).toBeInTheDocument();
@@ -20,7 +20,7 @@ describe('create new task', () => {
   });
 
   it('Change the value of the Name field in the List', () => {
-    render(<ListaTareas />);
+    render(<TaskList />);
     const nameContainer = screen.getByTestId('nameContainer');
     
     fireEvent.change(nameContainer, { target: { value: 'New List' } });
@@ -29,7 +29,7 @@ describe('create new task', () => {
   });
 
   it('Change the value of the List description field', () => {
-    render(<ListaTareas />);
+    render(<TaskList />);
     const nameContainer = screen.getByTestId('descriptionContainer');
     
     fireEvent.change(nameContainer, { target: { value: 'Description' } });

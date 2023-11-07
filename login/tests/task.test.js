@@ -1,13 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import TaskList from './TaskList';  // Importa el componente que deseas probar
+// import TaskList from './TaskList';  // Importa el componente que deseas probar
+import TaskList_task from '@/app/tasks/page';
 import { act } from 'react-dom/test-utils';
 import '@testing-library/jest-dom';
 
 
-describe("<TaskList />", () => {
+describe("TaskList", () => {
   it('renders the component correctly', () => {
-    render(<TaskList />);
+    render(<TaskList_task />);
 
     // Verifica que elementos específicos estén presentes en el renderizado
     expect(screen.getByTestId('tareas')).toBeInTheDocument();
