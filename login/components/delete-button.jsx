@@ -10,18 +10,18 @@ export default function DeleteButton({ onClick }) {
       color="secondary"
       style={{
         position: 'fixed',
-        bottom: '8px',
-        right: '8px',
+        bottom: '2%',
+        right: '5%',
         borderRadius: '50%',
-        minWidth: '128px',
-        height: '156px',
+        width: 'auto',
+        height: 'auto',
+        padding: '3%',
       }}
       onClick={onClick}
     >
-      <DeleteIcon data-testid = 'addicon'
+      <DeleteIcon data-testid = 'delicon'
       style={{
-        minWidth: '128px',
-        height: '128px',
+        fontSize: '400%',
       }}/>
     </Button>
   );
