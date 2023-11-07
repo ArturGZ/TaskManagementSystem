@@ -131,7 +131,7 @@ export default function Home() {
         {showBigButtons && (
           <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: theme.spacing(2) }}>
             <DeleteButton onClick={() => handleDeleteButtonClick()} />
-            <Link href="/tasks" style={{ textDecoration: 'none' }}>
+            <Link href="/create-task-list" style={{ textDecoration: 'none' }}>
               <AddButton onClick={() => handleAddButtonClick()} />
             </Link>
           </Box>
