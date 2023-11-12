@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../styles/theme';
 import TaskList from '../../components/task-list';
@@ -10,28 +10,34 @@ import { Grid, Typography, Container, Box } from '@mui/material';
 import Link from 'next/link';
 
 export default function Home() {
-  const isClient = typeof window !== 'undefined'; // Check if we are on the client
 
   // Data
-  const initialTaskLists = [];
-
-  // Function to get data from local storage
-  const getStoredData = () => {
-    if(isClient){
-        const storedData = localStorage.getItem('taskLists');
-        return storedData ? JSON.parse(storedData) : initialTaskLists;
-    }  
-    }
+  const initialTaskLists = [{"id":1,"name":"Task List 1","description":"Description List 1","color":"#FFC0CB","tasks":
+      [{"id":1,"name":"Task 1 of List 1","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
+      {"id":2,"name":"Task 2 of List 1","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
+      {"id":3,"name":"Task 3 of List 1","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
+    {"id":2,"name":"Task List 2","description":"Description List 2","color":"#FFC0CB","tasks":
+      [{"id":1,"name":"Task 1 of List 2","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
+      {"id":2,"name":"Task 2 of List 2","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
+      {"id":3,"name":"Task 3 of List 2","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
+    {"id":3,"name":"Task List 3","description":"Description List 3","color":"#ADD8E6","tasks":
+      [{"id":1,"name":"Task 1 of List 3","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
+      {"id":2,"name":"Task 2 of List 3","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
+      {"id":3,"name":"Task 3 of List 3","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
+    {"id":4,"name":"Task List 4","description":"Description List 4","color":"#FFFF99","tasks":
+      [{"id":1,"name":"Task 1 of List 4","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
+      {"id":2,"name":"Task 2 of List 4","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
+      {"id":3,"name":"Task 3 of List 4","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
+    {"id":5,"name":"Task List 5","description":"Description List 5","color":"#ADD8E6","tasks":
+      [{"id":1,"name":"Task 1 of List 5","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
+      {"id":2,"name":"Task 2 of List 5","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
+      {"id":3,"name":"Task 3 of List 5","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]}]
+;
   
   // States
-  const [taskLists, setTaskLists] = useState(getStoredData());
+  const [taskLists, setTaskLists] = useState(initialTaskLists);
   const [checkedItems, setCheckedItems] = useState([]);
   const [showBigButtons, setShowBigButtons] = useState(true);
-
-  // Effect to save data to local storage when it changes
-  useEffect(() => {
-      localStorage.setItem('taskLists', JSON.stringify(taskLists));
-  }, [taskLists]);
 
   // Function to handle checked task lists
   function handleCheckboxChange(taskListId) {
