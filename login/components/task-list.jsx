@@ -25,17 +25,17 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange,
 
   return (
     <List data-testid = 'list'>
-        <Fragment key={taskList.id}>
+        <Fragment key={taskList._id}>
           <ListItemButton data-testid = 'listitembutton' style={{ backgroundColor: taskList.color,
             padding: '2%',
             borderRadius: '2px',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' 
           }} 
-          onClick={() => onExpandItem(taskList.id)} selected={checkedItems.includes(taskList.id)}>
+          onClick={() => onExpandItem(taskList._id)} selected={checkedItems.includes(taskList._id)}>
             <Checkbox
               data-testid = 'checkbox'
-              checked={checkedItems.includes(taskList.id)}
-              onChange={() => onCheckboxChange(taskList.id)}
+              checked={checkedItems.includes(taskList._id)}
+              onChange={() => onCheckboxChange(taskList._id)}
               onClick={(event) => event.stopPropagation()}  
             />
             <ListItemText data-testid = 'listitemtext' primary={taskList.name} secondary={taskList.description} />
@@ -45,14 +45,14 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange,
                 backgroundColor: taskList.color,
               }}>
             {taskList.tasks.map((task) => (
-              <List data-testid = 'list' key={task.id}>
+              <List data-testid = 'list' key={task._id}>
                   <ListItemText data-testid = 'listitemtext' primary={task.name} secondary={`${task.description}`} />
                   <ListItemText data-testid = 'listitemtext' secondary={`Due: ${task.due}`} />   
                   <ListItemText data-testid = 'listitemtext' secondary={`Status: ${task.status}`} />                  
               </List>
             ))}
             <Link href="/tasks" style={{ textDecoration: 'none' }}>
-              <Button onClick={() => onAddClick(taskList.id)}> Add </Button>
+              <Button onClick={() => onAddClick(taskList._id)}> Add </Button>
             </Link>
           </Collapse>
           

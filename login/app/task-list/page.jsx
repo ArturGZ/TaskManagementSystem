@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../styles/theme';
 import TaskList from '../../components/task-list';
@@ -8,68 +8,73 @@ import AddButton from '../../components/add-button';
 import ToggleButton from '../../components/toggle-button';
 import { Grid, Typography, Container, Box } from '@mui/material';
 import Link from 'next/link';
+import { getTaskLists, getTaskListsWithFilteredTasks, updateTaskStatus, deleteTaskList} from '@/utils/apitasklist';
 
 export default function Home() {
 
-  // Data
-  const initialTaskLists = [{"id":1,"name":"Task List 1","description":"Description List 1","color":"#FFC0CB","tasks":
-      [{"id":1,"name":"Task 1 of List 1","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
-      {"id":2,"name":"Task 2 of List 1","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
-      {"id":3,"name":"Task 3 of List 1","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
-    {"id":2,"name":"Task List 2","description":"Description List 2","color":"#FFC0CB","tasks":
-      [{"id":1,"name":"Task 1 of List 2","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
-      {"id":2,"name":"Task 2 of List 2","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
-      {"id":3,"name":"Task 3 of List 2","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
-    {"id":3,"name":"Task List 3","description":"Description List 3","color":"#ADD8E6","tasks":
-      [{"id":1,"name":"Task 1 of List 3","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
-      {"id":2,"name":"Task 2 of List 3","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
-      {"id":3,"name":"Task 3 of List 3","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
-    {"id":4,"name":"Task List 4","description":"Description List 4","color":"#FFFF99","tasks":
-      [{"id":1,"name":"Task 1 of List 4","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
-      {"id":2,"name":"Task 2 of List 4","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
-      {"id":3,"name":"Task 3 of List 4","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]},
-    {"id":5,"name":"Task List 5","description":"Description List 5","color":"#ADD8E6","tasks":
-      [{"id":1,"name":"Task 1 of List 5","description":"Description Task 1","due":"10-11-2023","status":"In Progress"},
-      {"id":2,"name":"Task 2 of List 5","description":"Description Task 2","due":"10-11-2023","status":"In Progress"},
-      {"id":3,"name":"Task 3 of List 5","description":"Description Task 3","due":"10-11-2023","status":"In Progress"}]}]
-;
-  
   // States
-  const [taskLists, setTaskLists] = useState(initialTaskLists);
+  const [taskLists, setTaskLists] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
   const [showBigButtons, setShowBigButtons] = useState(true);
+
+  // Function to get all task lists without filter using API call
+  async function fetchTaskLists() {
+    try {
+      const result = await getTaskLists();
+      setTaskLists(result);
+    } catch (error) {
+      console.error('[ERROR] Error fetching task lists:', error);
+    }
+  }
+
+  // Function useEffect to get all task lists initially
+  useEffect(() => {
+    fetchTaskLists();
+  },[]);
+
+  // Function to delete task lists using API call
+  async function deleteTaskLists(task_list_id) {
+    try {
+      await deleteTaskList(task_list_id);
+      fetchTaskLists();
+    } catch (error) {
+      console.error('[ERROR] Error deleting task lists:', error);
+    }
+  }
 
   // Function to handle checked task lists
   function handleCheckboxChange(taskListId) {
     console.info('[INFO] Updating selected items');
     if (checkedItems.includes(taskListId)) {
-      setCheckedItems(checkedItems.filter((id) => id !== taskListId));
-      console.debug(checkedItems);
+      setCheckedItems(checkedItems.filter((_id) => _id !== taskListId));
+      console.debug('[DEBUG] Checked Items after a deletion:',checkedItems);
     } else {
       setCheckedItems([...checkedItems, taskListId]);
-      console.debug(checkedItems);
+      console.debug('[DEBUG] Checked Items after an addition:',checkedItems);
     }
   }
 
   // Function to delete the checked task lists
   function handleDeleteButtonClick() {
-    const updatedTaskLists = taskLists.filter((taskList) => !checkedItems.includes(taskList.id));
+    console.debug('[DEBUG] Selected lists to delete:', checkedItems);
+    checkedItems.forEach(_id => {
+      console.debug('[DEBUG] Id of Task List to delete:',_id);
+      deleteTaskLists(_id);
+    });
     setCheckedItems([]);
-    setTaskLists(updatedTaskLists);
     console.info('[INFO] Selected lists have been deleted');
-    console.debug(taskLists);
   }
 
   // Function to obtain the new task list id
   const getNewTaskListId = () => {
-    const existingIds = taskLists.map((taskList) => taskList.id);
+    const existingIds = taskLists.map((taskList) => taskList._id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
   }
 
   // Function to obtain the new task id
   const getNewTaskId = (taskListId) => {
-    const taskList = taskLists.find((list) => list.id === taskListId);
-    const existingIds =  taskList.tasks.map((tasks) => tasks.id);
+    const taskList = taskLists.find((list) => list._id === taskListId);
+    const existingIds =  taskList.tasks.map((tasks) => tasks._id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
   }
 
@@ -102,7 +107,7 @@ export default function Home() {
 
     // Find the corresponding list by its id
     const updatedTaskLists = taskLists.map((taskList) => {
-      if (taskList.id === taskListId) {
+      if (taskList._id === taskListId) {
         // Add the new task to the corresponding list
         return {
           ...taskList,
@@ -124,7 +129,7 @@ export default function Home() {
         </Typography>
         <Grid container spacing={2}>
           {taskLists && taskLists.map((taskList) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={taskList.id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={taskList._id}>
               <TaskList
                 taskList={taskList}
                 handleCheckboxChange={handleCheckboxChange}
