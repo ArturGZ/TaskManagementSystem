@@ -65,60 +65,9 @@ export default function Home() {
     console.info('[INFO] Selected lists have been deleted');
   }
 
-  // Function to obtain the new task list id
-  const getNewTaskListId = () => {
-    const existingIds = taskLists.map((taskList) => taskList._id);
-    return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
-  }
-
-  // Function to obtain the new task id
-  const getNewTaskId = (taskListId) => {
-    const taskList = taskLists.find((list) => list._id === taskListId);
-    const existingIds =  taskList.tasks.map((tasks) => tasks._id);
-    return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
-  }
-
-  // Function to add new task lists
+  // Function to notify change of page to create new task list
   function handleAddButtonClick(){
-    const newTaskListId = getNewTaskListId();
-
-    const newTaskList = {
-      id: newTaskListId,
-      name: `Task List ${newTaskListId}`,
-      description: `Description List ${newTaskListId}`,
-      color: '#DE4035',
-      tasks: []
-    };
-
-    setTaskLists([...taskLists, newTaskList]);
-  }
-
-  // Function to add new tasks
-  function handleAddTaskClick(taskListId){
-    const newTaskId = getNewTaskId(taskListId);
-
-    const newTask = {
-      id: newTaskId,
-      name: `Task ${newTaskId} of List ${taskListId}`,
-      description: `Description Task ${newTaskId}`,
-      due: '25-12-2023',
-      status: 'In Progress'
-    };
-
-    // Find the corresponding list by its id
-    const updatedTaskLists = taskLists.map((taskList) => {
-      if (taskList._id === taskListId) {
-        // Add the new task to the corresponding list
-        return {
-          ...taskList,
-          tasks: [...taskList.tasks, newTask],
-        };
-      }
-      return taskList;
-    });
-
-    // Update the state with the new list that contains the task
-    setTaskLists(updatedTaskLists);
+    console.info('[INFO] Redirecting to create task list page')
   }
 
   return (
@@ -134,7 +83,6 @@ export default function Home() {
                 taskList={taskList}
                 handleCheckboxChange={handleCheckboxChange}
                 checkedItems={checkedItems}
-                handleAddTaskClick={handleAddTaskClick}
               />
             </Grid>
           ))}
