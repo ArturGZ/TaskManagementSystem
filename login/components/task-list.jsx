@@ -1,8 +1,11 @@
 import {useState,Fragment} from 'react';
 import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, Button } from '@mui/material';
 import Link from 'next/link';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../styles/theme';
 
-export default function TaskList({ taskList, checkedItems, handleCheckboxChange, handleAddTaskClick}) {
+export default function TaskList({ taskList, checkedItems, handleCheckboxChange}) {
   
   // States
   const [expand, setExpand] = useState(false);
@@ -10,54 +13,60 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange,
   // Function to share checked task lists id
   const onCheckboxChange = (taskListId) => {
     handleCheckboxChange(taskListId);
-    console.log(checkedItems);
+    console.debug('[DEBUG] Selected items at internal component level:', checkedItems);
   };
 
-  // Function to whoe tasks in a list
+  // Function to show tasks in a list
   const onExpandItem = () => {
       setExpand(!expand);
   };
-  
-  // Function to share clicked task list id to add a new task
-  const onAddClick = (taskListId) => {
-    handleAddTaskClick(taskListId);
+
+  // Function to notify change of page to create new task
+  const onAddClick = () => {
+    console.info('[INFO] Redirecting to create task page');
   };
 
   return (
-    <List data-testid = 'list'>
-        <Fragment key={taskList.id}>
-          <ListItemButton data-testid = 'listitembutton' style={{ backgroundColor: taskList.color,
+    <ThemeProvider theme={theme}>
+      <List>
+        <Fragment key={taskList._id}>
+          <ListItemButton style={{ backgroundColor: taskList.color,
             padding: '2%',
             borderRadius: '2px',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' 
           }} 
-          onClick={() => onExpandItem(taskList.id)} selected={checkedItems.includes(taskList.id)}>
+          onClick={() => onExpandItem(taskList._id)} selected={checkedItems.includes(taskList._id)}>
             <Checkbox
-              data-testid = 'checkbox'
-              checked={checkedItems.includes(taskList.id)}
-              onChange={() => onCheckboxChange(taskList.id)}
+              checked={checkedItems.includes(taskList._id)}
+              onChange={() => onCheckboxChange(taskList._id)}
               onClick={(event) => event.stopPropagation()}  
             />
-            <ListItemText data-testid = 'listitemtext' primary={taskList.name} secondary={taskList.description} />
+            <ListItemText primary={taskList.name} secondary={taskList.description} />
           </ListItemButton>
-          <Divider data-testid = 'divider'/>
+          <Divider />
           <Collapse in={expand} timeout="auto" unmountOnExit  style={{
-                backgroundColor: taskList.color,
+                backgroundColor: taskList.color
               }}>
             {taskList.tasks.map((task) => (
-              <List data-testid = 'list' key={task.id}>
-                  <ListItemText data-testid = 'listitemtext' primary={task.name} secondary={`${task.description}`} />
-                  <ListItemText data-testid = 'listitemtext' secondary={`Due: ${task.due}`} />   
-                  <ListItemText data-testid = 'listitemtext' secondary={`Status: ${task.status}`} />                  
+              <List key={task._id} >
+                  <ListItemText primary={task.name} secondary={`${task.description}`} />
+                  <ListItemText secondary={`Due: ${task.due}`} />   
+                  <ListItemText secondary={`Status: ${task.status}`} />                  
               </List>
             ))}
             <Link href="/tasks" style={{ textDecoration: 'none' }}>
-              <Button onClick={() => onAddClick(taskList.id)}> Add </Button>
+            <Button onClick={onAddClick} style={{
+              backgroundColor: taskList.color,
+              color: theme.palette.getContrastText(taskList.color),
+            }}>
+              <AddTaskIcon sx={{ marginRight: '5px' }} />
+              ADD TASK
+            </Button>
             </Link>
           </Collapse>
-          
         </Fragment>
-    </List>
+      </List>
+    </ThemeProvider>
   );
 }
 
