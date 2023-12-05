@@ -36,9 +36,9 @@ export default function Home() {
   },[]);
 
   // Function to delete task lists using API call
-  async function deleteTaskLists(task_list_id) {
+  async function deleteTaskLists(taskListId) {
     try {
-      await deleteTaskList(task_list_id);
+      await deleteTaskList(taskListId);
       fetchTaskListsWithFilteredTasks(filterSel);
     } catch (error) {
       console.error('[ERROR] Error deleting task lists:', error);
@@ -68,6 +68,16 @@ export default function Home() {
     }
   }
 
+  // Function to update task status using API call
+  async function callUpdateTaskStatus(taskListId,taskId) {
+    try {
+      await updateTaskStatus(taskListId,taskId);
+      fetchTaskListsWithFilteredTasks(filterSel);
+    } catch (error) {
+      console.error('[ERROR] Error updating task status', error);
+    }
+  }
+
   // Function to handle checked task lists
   function handleCheckboxChange(taskListId) {
     console.info('[INFO] Updating selected items');
@@ -93,7 +103,13 @@ export default function Home() {
 
   // Function to notify change of page to create new task list
   function handleAddButtonClick(){
-    console.info('[INFO] Redirecting to create task list page')
+    console.info('[INFO] Redirecting to create task list page');
+  }
+
+  // Function to notify change of page to create new task list
+  function handleChangeStatus(taskListId,taskId){
+    console.info('[INFO] TaskList id: {}, Task id: {} will be updated', taskListId,taskId);
+    callUpdateTaskStatus(taskListId,taskId);
   }
 
   return (
@@ -147,6 +163,7 @@ export default function Home() {
                 taskList={taskList}
                 handleCheckboxChange={handleCheckboxChange}
                 checkedItems={checkedItems}
+                handleChangeStatus={handleChangeStatus}
               />
             </Grid>
           ))}
