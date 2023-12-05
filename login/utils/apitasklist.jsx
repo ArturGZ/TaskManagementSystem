@@ -22,9 +22,9 @@ export async function getTaskListsWithFilteredTasks(status) {
     }
 }
 
-export async function updateTaskStatus(task_list_id,task_id) {
+export async function updateTaskStatus(taskListId,taskId) {
     try {
-        const response = await axios.put(`${API_BASE_URL}/task_lists/tasks/task_list=${task_list_id}/task=${task_id}`);
+        const response = await axios.put(`${API_BASE_URL}/task_lists/tasks/task_list=${taskListId}/task=${taskId}`);
         return response.data
     } catch(error){
         console.error('Error updating task status', error)
@@ -32,9 +32,9 @@ export async function updateTaskStatus(task_list_id,task_id) {
     }
 }
 
-export async function deleteTaskList(task_list_id) {
+export async function deleteTaskList(taskListId) {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/task_lists/${task_list_id}`);
+        const response = await axios.delete(`${API_BASE_URL}/task_lists/${taskListId}`);
         return response.data
     } catch(error){
         console.error('Error delete task status', error)

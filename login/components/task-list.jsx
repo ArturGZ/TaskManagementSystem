@@ -1,15 +1,17 @@
 import {useState,Fragment} from 'react';
-import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, Button } from '@mui/material';
+import { List, ListItemButton, ListItemText, ListItemSecondaryAction, Divider, Checkbox, Collapse, Button, IconButton} from '@mui/material';
 import Link from 'next/link';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../styles/theme';
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
-export default function TaskList({ taskList, checkedItems, handleCheckboxChange}) {
+export default function TaskList({ taskList, checkedItems, handleCheckboxChange, handleChangeStatus}) {
   
   // States
   const [expand, setExpand] = useState(false);
-
+0
   // Function to share checked task lists id
   const onCheckboxChange = (taskListId) => {
     handleCheckboxChange(taskListId);
@@ -24,6 +26,12 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange}
   // Function to notify change of page to create new task
   const onAddClick = () => {
     console.info('[INFO] Redirecting to create task page');
+  };
+
+  // Function to send id's to change task status
+  const onChangeStatus = (taskListId,taskId) => {
+    console.debug('[DEBUG] TaskList id: {}, Task id: {} to be updated internal values', taskListId,taskId);
+    handleChangeStatus(taskListId,taskId)
   };
 
   return (
@@ -51,7 +59,22 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange}
               <List key={task._id} >
                   <ListItemText primary={task.name} secondary={`${task.description}`} />
                   <ListItemText secondary={`Due: ${task.due}`} />   
-                  <ListItemText secondary={`Status: ${task.status}`} />                  
+                  <ListItemText secondary={`Status: ${task.status}`} /> 
+                  <ListItemSecondaryAction>
+                    {task.status === 'Complete' ? (
+                      <IconButton onClick={() => onChangeStatus(taskList._id,task._id)} style={{
+                        backgroundColor: theme.palette.background.paper
+                      }}>
+                        <DoneIcon color="primary" />
+                      </IconButton>
+                    ) : (
+                      <IconButton onClick={() => onChangeStatus(taskList._id,task._id)} style={{
+                        backgroundColor: theme.palette.background.paper
+                      }}>
+                        <ClearIcon color="secondary" />
+                      </IconButton>
+                    )} 
+                  </ListItemSecondaryAction>             
               </List>
             ))}
             <Link href="/tasks" style={{ textDecoration: 'none' }}>
