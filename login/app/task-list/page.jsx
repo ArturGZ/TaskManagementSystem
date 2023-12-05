@@ -11,6 +11,7 @@ import { Grid, Typography, Container, Box } from '@mui/material';
 import Link from 'next/link';
 import { getTaskLists, getTaskListsWithFilteredTasks, updateTaskStatus, deleteTaskList} from '@/utils/apitasklist';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Swal from 'sweetalert2';
 
 export default function Home() {
 
@@ -93,12 +94,40 @@ export default function Home() {
   // Function to delete the checked task lists
   function handleDeleteButtonClick() {
     console.debug('[DEBUG] Selected lists to delete:', checkedItems);
-    checkedItems.forEach(_id => {
-      console.debug('[DEBUG] Id of Task List to delete:',_id);
-      deleteTaskLists(_id);
-    });
-    setCheckedItems([]);
-    console.info('[INFO] Selected lists have been deleted');
+    if (checkedItems.length == 0) {
+      console.warn('[WARNING] No task lists selected for deletion.');
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "No task lists selected for deletion.",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } else [
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: theme.palette.success.main,
+        cancelButtonColor: theme.palette.secondary.main,
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          checkedItems.forEach(_id => {
+            console.debug('[DEBUG] Id of Task List to delete:',_id);
+            deleteTaskLists(_id);
+          });
+          setCheckedItems([]);
+          console.info('[INFO] Selected lists have been deleted');
+          Swal.fire({
+            title: "Deleted!",
+            text: "Selected lists have been deleted.",
+            icon: "success"
+          });
+        }
+      })
+    ]
   }
 
   // Function to notify change of page to create new task list
