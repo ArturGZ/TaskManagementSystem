@@ -6,6 +6,7 @@ import TaskList from '../../components/task-list';
 import DeleteButton from '../../components/delete-button';
 import AddButton from '../../components/add-button';
 import ToggleButton from '../../components/toggle-button';
+import TaskStatusToggleButtons from '../../components/task-status-toggle-buttons';
 import { Grid, Typography, Container, Box } from '@mui/material';
 import Link from 'next/link';
 import { getTaskLists, getTaskListsWithFilteredTasks, updateTaskStatus, deleteTaskList} from '@/utils/apitasklist';
@@ -17,6 +18,7 @@ export default function Home() {
   const [taskLists, setTaskLists] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
   const [showBigButtons, setShowBigButtons] = useState(true);
+  const [filterSel, setFilterSel] = useState(0);
 
   // Function to get all task lists without filter using API call
   async function fetchTaskLists() {
@@ -37,9 +39,32 @@ export default function Home() {
   async function deleteTaskLists(task_list_id) {
     try {
       await deleteTaskList(task_list_id);
-      fetchTaskLists();
+      fetchTaskListsWithFilteredTasks(filterSel);
     } catch (error) {
       console.error('[ERROR] Error deleting task lists:', error);
+    }
+  }
+
+  // Function to get all task lists with tasks filtered by status or not
+  async function fetchTaskListsWithFilteredTasks(filterSel) {
+    try {
+      setFilterSel(filterSel);
+      console.debug('[DEBUG] Filter variable value:', filterSel);
+      if(!filterSel){
+        console.debug('[INFO] Entering get task lists with no filter');
+        const result = await getTaskLists();
+        setTaskLists(result);
+      } else if (filterSel == 1){
+        console.debug('[INFO] Entering get task lists with complete tasks');
+        const result = await getTaskListsWithFilteredTasks('Complete');
+        setTaskLists(result);
+      } else if (filterSel == 2){
+        console.debug('[INFO] Entering get task lists with pending tasks');
+        const result = await getTaskListsWithFilteredTasks('Pending');
+        setTaskLists(result);
+      }
+    } catch (error) {
+      console.error('[ERROR] Error fetching task lists on filter function:', error);
     }
   }
 
@@ -83,7 +108,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'center',
             [theme.breakpoints.down('sm')]: {
-              fontSize: '2rem', // Small screens
+              fontSize: '1.5rem', // Small screens
             },
             [theme.breakpoints.between('sm', 'md')]: {
               fontSize: '2.5rem', // Medium screens
@@ -97,7 +122,6 @@ export default function Home() {
           }}>
           <Box component={CheckCircleIcon} sx={{
             fontSize: '3rem',
-            marginRight: '10px',
             [theme.breakpoints.down('sm')]: {
               fontSize: '2rem', // Small screens
             },
@@ -112,6 +136,9 @@ export default function Home() {
             }
           }} />
           Organize Your Tasks
+          <TaskStatusToggleButtons
+            fetchTaskListsWithFilteredTasks={fetchTaskListsWithFilteredTasks}
+          />
       </Typography>
         <Grid container spacing={2}>
           {taskLists && taskLists.map((taskList) => (
