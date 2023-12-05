@@ -1,9 +1,9 @@
 'use client'
 
-import { Box, Menu, IconButton, Tooltip, MenuList, ListItem, ListItemText } from '@mui/material';
+import { Box, Menu, IconButton, Tooltip, MenuList, ListItem, ListItemText, Divider } from '@mui/material';
 import { useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 export default function Notifications() {
     const { status, data:session } = useSession();
@@ -19,9 +19,10 @@ export default function Notifications() {
     setAnchorEl(null);
   };
 
+  const ITEM_HEIGHT = 95;
+
   return (
     // Fragment is equal to <> </>
-    //sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
     <Fragment>
       <Box >
 
@@ -32,9 +33,10 @@ export default function Notifications() {
             aria-controls={open ? 'notifications-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
+            sx={{mr: 1, color: 'whitesmoke'}}
           >
-            <NotificationsIcon fontSize='large' >
-            </NotificationsIcon>
+            <NotificationsNoneIcon fontSize='large'/>
+
           </IconButton>
         </Tooltip>
       </Box>
@@ -47,22 +49,35 @@ export default function Notifications() {
         // Menu display animation
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        // Style
 				// Margin management
 				sx={{
+          maxHeight: ITEM_HEIGHT * 4.5,
+          maxWidth: '200rem',
 					overflow:'visible',
-					mt: 1.5,
+					mt: 1,
 				}}
       >
 				{/* Menu options */}
         <MenuList sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <ListItem>
-                <ListItemText primary="Tarea 1" secondary="15/12/2023" />
+                <ListItemText primary="Task 1 with large tittle for test of width" secondary="15/12/2023" />
             </ListItem>
+            <Divider variant='middle'/>
             <ListItem>
-                <ListItemText primary="Tarea 2" secondary="18/12/2023" />
+                <ListItemText primary="Task 2" secondary="18/12/2023" />
             </ListItem>
+            <Divider variant='middle'/>
             <ListItem>
-                <ListItemText primary="Tarea 3" secondary="15/01/2024" />
+                <ListItemText primary="Task 3" secondary="15/01/2024" />
+            </ListItem>
+            <Divider variant='middle'/>
+            <ListItem>
+                <ListItemText primary="Task 4" secondary="15/01/2024" />
+            </ListItem>
+            <Divider variant='middle'/>
+            <ListItem>
+                <ListItemText primary="Task 5" secondary="15/01/2024" />
             </ListItem>
         </MenuList>
       </Menu>
