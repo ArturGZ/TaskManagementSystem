@@ -1,6 +1,9 @@
 import {useState,Fragment} from 'react';
 import { List, ListItemButton, ListItemText, Divider, Checkbox, Collapse, Button } from '@mui/material';
 import Link from 'next/link';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../styles/theme';
 
 export default function TaskList({ taskList, checkedItems, handleCheckboxChange}) {
   
@@ -24,7 +27,8 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange}
   };
 
   return (
-    <List>
+    <ThemeProvider theme={theme}>
+      <List>
         <Fragment key={taskList._id}>
           <ListItemButton style={{ backgroundColor: taskList.color,
             padding: '2%',
@@ -41,21 +45,28 @@ export default function TaskList({ taskList, checkedItems, handleCheckboxChange}
           </ListItemButton>
           <Divider />
           <Collapse in={expand} timeout="auto" unmountOnExit  style={{
-                backgroundColor: taskList.color,
+                backgroundColor: taskList.color
               }}>
             {taskList.tasks.map((task) => (
-              <List key={task._id}>
+              <List key={task._id} >
                   <ListItemText primary={task.name} secondary={`${task.description}`} />
                   <ListItemText secondary={`Due: ${task.due}`} />   
                   <ListItemText secondary={`Status: ${task.status}`} />                  
               </List>
             ))}
             <Link href="/tasks" style={{ textDecoration: 'none' }}>
-              <Button onClick={onAddClick}> Add </Button>
+            <Button onClick={onAddClick} style={{
+              backgroundColor: taskList.color,
+              color: theme.palette.getContrastText(taskList.color),
+            }}>
+              <AddTaskIcon sx={{ marginRight: '5px' }} />
+              ADD TASK
+            </Button>
             </Link>
           </Collapse>
         </Fragment>
-    </List>
+      </List>
+    </ThemeProvider>
   );
 }
 

@@ -9,6 +9,7 @@ import ToggleButton from '../../components/toggle-button';
 import { Grid, Typography, Container, Box } from '@mui/material';
 import Link from 'next/link';
 import { getTaskLists, getTaskListsWithFilteredTasks, updateTaskStatus, deleteTaskList} from '@/utils/apitasklist';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export default function Home() {
 
@@ -73,12 +74,48 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Typography variant="h2" style={{ backgroundColor: '#bf34bb', color: theme.palette.primary.contrastText, padding: theme.spacing(2), textAlign: 'center' }}>
-          Task Lists
-        </Typography>
+        <Typography variant="h2" component="div" sx={{
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.primary.contrastText,
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '2rem', // Small screens
+            },
+            [theme.breakpoints.between('sm', 'md')]: {
+              fontSize: '2.5rem', // Medium screens
+            },
+            [theme.breakpoints.between('md', 'lg')]: {
+              fontSize: '3rem', // Large screens
+            },
+            [theme.breakpoints.up('lg')]: {
+              fontSize: '4rem', // Extra large screens
+            }
+          }}>
+          <Box component={CheckCircleIcon} sx={{
+            fontSize: '3rem',
+            marginRight: '10px',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '2rem', // Small screens
+            },
+            [theme.breakpoints.between('sm', 'md')]: {
+              fontSize: '2.5rem', // Medium screens
+            },
+            [theme.breakpoints.between('md', 'lg')]: {
+              fontSize: '3rem', // Large screens
+            },
+            [theme.breakpoints.up('lg')]: {
+              fontSize: '4rem', // Extra large screens
+            }
+          }} />
+          Organize Your Tasks
+      </Typography>
         <Grid container spacing={2}>
           {taskLists && taskLists.map((taskList) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={taskList._id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={taskList._id} >
               <TaskList
                 taskList={taskList}
                 handleCheckboxChange={handleCheckboxChange}
