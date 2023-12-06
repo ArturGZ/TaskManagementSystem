@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Menu, IconButton, Tooltip, MenuList, MenuItem, ListItem, ListItemText, Divider } from '@mui/material';
+import { Box, Menu, IconButton, Tooltip, MenuList, ListItem, ListItemText, Divider } from '@mui/material';
 import { useEffect, useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -46,8 +46,6 @@ export default function Notifications() {
 
     const diffDays = Math.ceil(diffMilliseconds / (1000 * 60 * 60 * 24));
 
-    
-    /* const prueba = `${hour < 10 ? '0' : ''}${hour}:${min < 10 ? '0' : ''}${min}` */
     const day = date.getDate();
     const month = date.toLocaleString('default',{month: 'short'});
     const year = date.getFullYear();
@@ -84,7 +82,6 @@ export default function Notifications() {
         </Tooltip>
       </Box>
 
-
       <Menu
         anchorEl={anchorEl}
         id="notification-menu"
@@ -103,17 +100,13 @@ export default function Notifications() {
 					mt: 1,
 				}}
       >
-				{/* Menu options */}
+				{/* Notifications list */}
         <MenuList sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.notification' }}>
             {tasks.map((task) => (
-              <Fragment>
-                <MenuItem>
-                  <ListItem>
-                    <ListItemText primary={task.name} secondary={dateFormat(task.due) } />
-                  </ListItem>
-                </MenuItem>
-                <Divider variant='middle'/>
-              </Fragment>
+                <ListItem>
+                  <ListItemText primary={task.name} secondary={dateFormat(task.due) } />
+                  <Divider variant='middle'/>
+                </ListItem>
             ))}
         
         </MenuList>
