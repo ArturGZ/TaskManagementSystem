@@ -24,6 +24,7 @@ const theme = createTheme({
         background: {
             // default: '#00BCD4',
             paper: '#EBE8E8',
+            notification: '#F9FAFF',
         },
       },
 
