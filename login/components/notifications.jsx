@@ -5,16 +5,17 @@ import { useEffect, useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { get_datetasks, get_notif } from '@/utils/apinotifications';
+import TaskDetailDialog from './task-detail-dialog';
 
 export default function Notifications() {
-    const { status, data:session } = useSession();
-	// Anchor point for menu
-    const [anchorEl, setAnchorEl] = useState(null);
-	// Determines if the menu is open
-    const open = Boolean(anchorEl);
-	// Event management
-    const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const { status, data:session } = useSession();
+  //  Anchor point for menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  // Determines if the menu is open
+  const open = Boolean(anchorEl);
+  // Event management
+  const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -38,6 +39,7 @@ export default function Notifications() {
     fetchTasks();
   }, []);
 
+
   const dateFormat = (dateTask) => {
     const date = new Date(dateTask);
     const dateCurrent = new Date();
@@ -46,8 +48,6 @@ export default function Notifications() {
 
     const diffDays = Math.ceil(diffMilliseconds / (1000 * 60 * 60 * 24));
 
-    
-    /* const prueba = `${hour < 10 ? '0' : ''}${hour}:${min < 10 ? '0' : ''}${min}` */
     const day = date.getDate();
     const month = date.toLocaleString('default',{month: 'short'});
     const year = date.getFullYear();
@@ -61,9 +61,18 @@ export default function Notifications() {
 
     const concatTime = `${hour < 10 ? '0' : ''}${hour}:${min < 10 ? '0' : ''}${min}`;
     
-    return `${concatDay} - ${concatTime}`;
+    return `${concatDay} at ${concatTime}`;
   };
 
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleItemClick = (task) => {
+    setSelectedTask(task);
+  };
+
+  const handleCloseTask = () => {
+      setSelectedTask(null);
+  };
 
   return (
     // Fragment is equal to <> </>
@@ -84,7 +93,6 @@ export default function Notifications() {
         </Tooltip>
       </Box>
 
-
       <Menu
         anchorEl={anchorEl}
         id="notification-menu"
@@ -103,21 +111,28 @@ export default function Notifications() {
 					mt: 1,
 				}}
       >
-				{/* Menu options */}
+				{/* Notifications list */}
         <MenuList sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.notification' }}>
             {tasks.map((task) => (
-              <Fragment>
-                <MenuItem>
-                  <ListItem>
-                    <ListItemText primary={task.name} secondary={dateFormat(task.due) } />
-                  </ListItem>
-                </MenuItem>
-                <Divider variant='middle'/>
-              </Fragment>
+              <MenuItem  sx={{pt:1, mt:1}}>
+                  <ListItemText key={`${task.list_id}-${task.task_id}`} 
+                    primary={task.name} 
+                    secondary={dateFormat(task.due)}
+                    onClick={() => handleItemClick(task)} />
+                  <Divider variant='middle'/>
+              </MenuItem>
             ))}
-        
         </MenuList>
       </Menu>
+      <TaskDetailDialog
+          open = {selectedTask !== null}
+          onClose = {handleCloseTask}
+          /* listId={selectedTask?.list_id}
+          taskId={selectedTask?.task_id} */
+          due = {selectedTask?.due}
+          name = {selectedTask?.name}
+          status = {selectedTask?.status}
+        />
     </Fragment>
   );
 }

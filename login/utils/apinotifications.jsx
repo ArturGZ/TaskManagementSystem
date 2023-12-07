@@ -12,12 +12,12 @@ export async function get_datetasks() {
     }
 }
 
-export async function get_notif(list_id,task_id,notif_id) {
+export async function get_notif(list_id,task_id) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notif/${list_id}/${task_id}/${notif_id}`);
+        const response = await axios.get(`${API_BASE_URL}/notif/${list_id}/${task_id}`);
         return response.data
     } catch(error){
-        console.error('Error fetching notifications list', error)
+        console.error('Error fetching notification by id', error)
         throw error;
     }
 }
