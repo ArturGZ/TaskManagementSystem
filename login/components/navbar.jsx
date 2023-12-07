@@ -4,10 +4,11 @@
 
 import { AppBar, Box, Button, Toolbar, Zoom, Typography, CssBaseline } from '@mui/material';
 import { Tooltip, CircularProgress  } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { useSession, Fragment } from 'next-auth/react';
 import Link from 'next/link';
 import AccountMenu from './account-menu';
 import DrawerMenu from './drawer-menu';
+import Notifications from './notifications';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../styles/theme';
 
@@ -30,7 +31,7 @@ export default function Navbar() {
 
 						<Box alignItems='center'>
 							{/* For the side panel */}
-							<DrawerMenu />	
+							<DrawerMenu />
 
 							<Link href='/'>
 								<Tooltip title={'Kairos'} arrow TransitionComponent={Zoom}>
@@ -45,7 +46,12 @@ export default function Navbar() {
 
 						{/* Dynamic part of navbar */}
 						{status === 'authenticated' ? (
-							<AccountMenu />	// For account options from user avatar
+							<>
+								<Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+									<Notifications/>
+									<AccountMenu/>
+								</Box>
+							</>
 						) : status === 'loading' ? (
 							<CircularProgress color='inherit'/> // While getting the session state
 						) : (

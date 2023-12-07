@@ -26,7 +26,7 @@ export default function DrawerMenu() {
 
 	return (
 		<>
-		<Tooltip title="Options">
+		<Tooltip title="Menu">
 			<IconButton 
 				size='large' 
 				edge='start' 
@@ -61,7 +61,7 @@ export default function DrawerMenu() {
 			{/* Panel header */}
 			<Box textAlign='center' role='presentation'>
 				<Typography variant='h6' component='div'> 
-					Menu panel
+					Menu
 				</Typography> 
 			</Box>
 
